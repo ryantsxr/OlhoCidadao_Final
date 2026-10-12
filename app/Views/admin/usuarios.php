@@ -12,7 +12,7 @@ $ativo = 'admin-usuarios';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuários - Olho Cidadão</title>
     <link rel="stylesheet" href="<?= BASE_URL ?>/css/dashboard.css?v=0.52.9">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/css/novidades.css?v=0.52.9">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/css/novidades.css?v=1.0.6">
     <link rel="stylesheet" href="<?= BASE_URL ?>/vendor/fontes/fontes.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/vendor/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/css/fundo-animado.css?v=0.52.9">
@@ -31,13 +31,13 @@ $ativo = 'admin-usuarios';
             </div>
         </header>
 
-        <form method="get" action="<?= BASE_URL ?>/" class="busca-denuncias">
+        <form method="get" action="<?= BASE_URL ?>/" class="busca-denuncias busca-usuarios-admin">
             <input type="hidden" name="rota" value="admin-usuarios">
             <input type="search" name="busca" value="<?= htmlspecialchars($busca) ?>" placeholder="Buscar por nome ou e-mail...">
             <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
 
-        <div class="lista">
+        <div class="lista lista-usuarios-admin">
             <?php if (!$lista): ?>
                 <div class="estado-vazio"><p>Nenhum usuário encontrado.</p></div>
             <?php endif; ?>

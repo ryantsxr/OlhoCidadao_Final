@@ -95,3 +95,36 @@ body.tema-claro .aviso-consulta.erro { color: #b4232f; }
     .caixa-solta { padding: 20px; }
     .linha-usuario .acoes-usuario { grid-column: 1 / -1; }
 }
+
+
+/* ---------- usuários (admin) - respiro da busca ---------- */
+.busca-usuarios-admin {
+    margin: 26px 0 30px;
+    max-width: 500px;
+}
+.busca-usuarios-admin input[type="search"] {
+    min-height: 46px;
+    padding-inline: 18px;
+}
+.busca-usuarios-admin button {
+    width: 46px;
+    height: 46px;
+}
+.lista-usuarios-admin {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 6px;
+}
+.lista-usuarios-admin .denuncia {
+    margin-bottom: 0;
+}
+@media (max-width: 768px) {
+    .busca-usuarios-admin {
+        margin: 22px 0 24px;
+        max-width: 100%;
+    }
+    .lista-usuarios-admin {
+        gap: 14px;
+    }
+}
