@@ -6,9 +6,12 @@
 
 ## Equipe
 
-- Cassio Souza
 - Enzo Ryan
-- _(adicione aqui os demais integrantes)_
+- Marcus Vinicius
+- Artur Gabriel
+- Dercley Maciel
+- Eric Valiante
+- Gabriel Henrique
 
 ## Requisitos da entrega final
 
