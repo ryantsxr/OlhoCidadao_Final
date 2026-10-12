@@ -1,0 +1,15 @@
+# Encaminha tudo para a pasta public/ — assim storage/, app/, sql/ etc.
+# nunca ficam acessíveis pelo navegador quando o projeto roda em htdocs.
+Options -Indexes
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^$ public/ [L]
+    RewriteRule ^(?!public/)(.*)$ public/$1 [L]
+</IfModule>
+
+# Bloqueia arquivos internos mesmo se o rewrite não estiver ativo.
+<FilesMatch "(\.(json|sql|lock|log|key|md|bak|tmp|ini|sh|dist|exemplo\.php)$|^\.(?!well-known$)|^VERSION$|^composer\.)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>

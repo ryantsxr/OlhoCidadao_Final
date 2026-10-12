@@ -1,0 +1,192 @@
+/* =====================================================================
+   responsivo.css — ajustes globais para celular (v0.36)
+   Carregado DEPOIS dos CSS de cada página, por isso consegue corrigir
+   pontos que ficaram de fora sem mexer em cada arquivo.
+   ===================================================================== */
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+/* Imagens nunca estouram a largura (exceto as peças internas do mapa Leaflet) */
+img:not([class*="leaflet"]) { max-width: 100%; }
+
+/* Textos longos (e-mail, endereço, protocolo) quebram em vez de empurrar a tela */
+.conteudo, .caixa-denuncia, .card, .denuncia, .usuario-texto {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+/* Mapa público e gaveta do menu: 100vh engana no celular (barra do navegador).
+   dvh usa a altura realmente visível; vh fica de reserva para navegadores antigos. */
+.mapa-publico-layout { height: 100vh; height: 100dvh; }
+
+/* Gráficos do painel: minmax(300px) estourava em telas de 320px */
+.grade-graficos { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+
+/* Login, cadastro e recuperação de senha: o body tinha altura fixa de 100vh,
+   então o formulário comprido do cadastro ficava cortado e sem rolagem. */
+body.pagina-auth {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 16px 0;
+}
+
+/* ---------- Tablets e celulares ---------- */
+@media screen and (max-width: 900px) {
+    .menu { height: 100vh; height: 100dvh; }
+    body { overflow-x: clip; }   /* rede de segurança: nunca rolar para o lado */
+}
+
+@media screen and (max-width: 768px) {
+    /* Campos podem encolher dentro de linhas flex (ex.: busca + botões) e nunca passam da caixa */
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="hidden"]),
+    select,
+    textarea {
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Itens de grade/flex podem encolher (senão o campo de 16px empurra a coluna) */
+    .campo, .form-grid > * { min-width: 0; }
+    .campo input, .campo select, .campo textarea { width: 100%; }
+
+    /* iPhone dá zoom automático em campo com fonte menor que 16px */
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="hidden"]),
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+}
+
+/* ---------- Tabelas dos relatórios: rolam dentro da própria caixa ---------- */
+@media screen and (max-width: 700px) {
+    table.tabela-historico,
+    table.info-basica {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* ---------- Toque: alvos de pelo menos 44px (padrão de acessibilidade) ---------- */
+@media (pointer: coarse) {
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="hidden"]),
+    select,
+    button[type="submit"],
+    .menu nav a {
+        min-height: 44px;
+    }
+}
+
+/* ---------- Celulares pequenos (até 360px) ---------- */
+@media screen and (max-width: 360px) {
+    .conteudo { padding: 12px; }
+    header h1 { font-size: 19px; }
+    .caixa-denuncia { padding: 18px 12px; }
+}
+
+
+/* ================================================================
+   v1.0.1 — Autenticação em celulares: layout, atalhos e formulários.
+   Todas as regras abaixo são restritas às páginas de autenticação;
+   desktop e as telas de denúncia/admin mantêm o layout existente.
+   ================================================================ */
+@media (max-width: 600px) {
+    body.pagina-auth {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        min-height: 100dvh;
+        padding: 12px 10px calc(76px + env(safe-area-inset-bottom, 0px));
+        overflow-x: clip;
+    }
+    body.pagina-auth .container {
+        width: 100%;
+        max-width: 460px;
+        min-width: 0;
+        height: auto;
+        min-height: 0;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+    body.pagina-auth .container > .left,
+    body.pagina-auth .container > .right {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+    body.pagina-auth .container > .left {
+        padding: 28px 20px 24px;
+    }
+    body.pagina-auth .container > .right {
+        padding: 24px 20px 26px;
+    }
+    body.pagina-auth .right form {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        margin: 0;
+    }
+    body.pagina-auth .destaques {
+        width: 100%;
+        max-width: 100%;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    body.pagina-auth .destaque {
+        min-width: 0;
+        gap: 12px;
+        padding: 12px;
+    }
+    body.pagina-auth .destaque > div:last-child { min-width: 0; }
+    body.pagina-auth .destaque small { overflow-wrap: anywhere; }
+    body.pagina-auth .tipo-login-tabs { width: 100%; gap: 4px; }
+    body.pagina-auth .tab-login {
+        min-width: 0;
+        min-height: 44px;
+        height: auto;
+        padding: 10px 6px;
+        font-size: 12px;
+        line-height: 1.25;
+        white-space: normal;
+        text-overflow: clip;
+    }
+    body.pagina-auth form h2 { margin-bottom: 20px; line-height: 1.35; }
+    body.pagina-auth .atalhos {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 22px;
+        padding-top: 18px;
+    }
+    body.pagina-auth .atalhos a {
+        min-width: 0;
+        min-height: 86px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 8px;
+        font-size: 12px;
+        line-height: 1.35;
+        white-space: normal;
+        text-align: center;
+        overflow-wrap: anywhere;
+    }
+    body.pagina-auth .atalhos a span { display: block; min-width: 0; }
+    body.pagina-auth .atalhos a i { flex: none; }
+}
+@media (max-width: 340px) {
+    body.pagina-auth { padding-inline: 8px; }
+    body.pagina-auth .container > .left,
+    body.pagina-auth .container > .right { padding-inline: 14px; }
+    body.pagina-auth .atalhos { gap: 8px; }
+    body.pagina-auth .atalhos a { padding-inline: 5px; font-size: 11.5px; }
+}

@@ -1,0 +1,77 @@
+/* Olho Cidadão — Cores acessíveis, só no modo daltonismo.
+ * Usa cor + texto/ícones/padrão: nenhuma informação depende apenas da cor.
+ * Contraste reforçado em tema claro e escuro sem alterar o tema original.
+ */
+body.modo-daltonico {
+  --oc-st-pendente: #B76A00;
+  --oc-st-analise: #0072B2;
+  --oc-st-aguardando: #974A84;
+  --oc-st-resolvido: #007A62;
+  --oc-st-cancelada: #626B7A;
+  --oc-st-rejeitada: #A34E27;
+}
+/* Em modo padrão, rejeitada mantém a aparência anterior de cancelada. */
+.rejeitada {
+  display: inline-block;
+  background: #6c757d;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+.denuncia-card.st-rejeitada { --borda-st: #6C757D; }
+span.rejeitada::before, .pilula-status.st-rejeitada::before, .pilula-status.st-cancelada::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  margin-right: 6px;
+  font-size: .9em;
+}
+span.rejeitada::before, .pilula-status.st-rejeitada::before { content: "\f057"; }
+.pilula-status.st-cancelada::before { content: "\f05e"; }
+
+body.modo-daltonico :is(.pendente, .analise, .aguardando, .resolvido, .cancelada, .rejeitada) {
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,.32);
+  font-weight: 650;
+}
+body.modo-daltonico .pendente { background: var(--oc-st-pendente) !important; }
+body.modo-daltonico .analise { background: var(--oc-st-analise) !important; }
+body.modo-daltonico .aguardando { background: var(--oc-st-aguardando) !important; }
+body.modo-daltonico .resolvido { background: var(--oc-st-resolvido) !important; }
+body.modo-daltonico .cancelada { background: var(--oc-st-cancelada) !important; }
+body.modo-daltonico .rejeitada {
+  background: var(--oc-st-rejeitada) !important;
+  border-style: dashed;
+}
+body.modo-daltonico .denuncia-card.st-pendente { --borda-st: var(--oc-st-pendente); }
+body.modo-daltonico .denuncia-card.st-analise { --borda-st: var(--oc-st-analise); }
+body.modo-daltonico .denuncia-card.st-aguardando { --borda-st: var(--oc-st-aguardando); }
+body.modo-daltonico .denuncia-card.st-resolvido { --borda-st: var(--oc-st-resolvido); }
+body.modo-daltonico .denuncia-card.st-cancelada { --borda-st: var(--oc-st-cancelada); }
+body.modo-daltonico .denuncia-card.st-rejeitada { --borda-st: var(--oc-st-rejeitada); border-style: dashed; }
+body.modo-daltonico .col-pendente { --cor: var(--oc-st-pendente); }
+body.modo-daltonico .col-analise { --cor: var(--oc-st-analise); }
+body.modo-daltonico .col-aguardando { --cor: var(--oc-st-aguardando); }
+body.modo-daltonico .col-resolvido { --cor: var(--oc-st-resolvido); }
+body.modo-daltonico .kanban-coluna-topo { border-bottom-style: dashed; }
+body.modo-daltonico .prev-pill { background: var(--oc-st-analise) !important; color: #fff !important; }
+/* A pílula da localização tem fundo suave, não texto branco sobre bloco sólido. */
+body.modo-daltonico .pilula-status { border: 1px solid currentColor; font-weight: 700; }
+body.modo-daltonico .pilula-status.st-pendente { color: #F2BB53 !important; background: rgba(183,106,0,.18) !important; }
+body.modo-daltonico .pilula-status.st-analise { color: #69C5FF !important; background: rgba(0,114,178,.18) !important; }
+body.modo-daltonico .pilula-status.st-aguardando { color: #EEA8DB !important; background: rgba(151,74,132,.18) !important; }
+body.modo-daltonico .pilula-status.st-resolvido { color: #64D8B4 !important; background: rgba(0,122,98,.18) !important; }
+body.modo-daltonico .pilula-status.st-cancelada { color: #D7DEE8 !important; background: rgba(98,107,122,.2) !important; }
+body.modo-daltonico .pilula-status.st-rejeitada { color: #FFB18B !important; background: rgba(163,78,39,.18) !important; border-style: dashed; }
+body.modo-daltonico.tema-claro .pilula-status.st-pendente { color: #874600 !important; }
+body.modo-daltonico.tema-claro .pilula-status.st-analise { color: #005C94 !important; }
+body.modo-daltonico.tema-claro .pilula-status.st-aguardando { color: #7B3068 !important; }
+body.modo-daltonico.tema-claro .pilula-status.st-resolvido { color: #005C47 !important; }
+body.modo-daltonico.tema-claro .pilula-status.st-cancelada { color: #4D5562 !important; }
+body.modo-daltonico.tema-claro .pilula-status.st-rejeitada { color: #85370F !important; }
+body.modo-daltonico .mapa-publico-legenda .legenda-pendente { color: var(--oc-st-pendente) !important; }
+body.modo-daltonico .mapa-publico-legenda .legenda-analise { color: #56B4E9 !important; }
+body.modo-daltonico .mapa-publico-legenda .legenda-aguardando { color: #CC79A7 !important; }
+body.modo-daltonico .mapa-publico-legenda .legenda-resolvido { color: #009E73 !important; }
+/* Mostra o modo ativo no próprio switch, sem mudar as cores fora dele. */
+body.modo-daltonico #toggle-daltonico:focus-visible + .slider { outline: 3px solid #56B4E9; outline-offset: 3px; }

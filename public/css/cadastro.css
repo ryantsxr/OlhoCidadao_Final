@@ -1,0 +1,25 @@
+/*======================
+CHECKBOX TERMOS (CADASTRO)
+======================*/
+
+.termos-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.termos-container input[type="checkbox"] {
+    width: auto;
+    height: auto;
+    margin: 0;
+    cursor: pointer;
+}
+
+.termos-container label {
+    color: #019B38;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}

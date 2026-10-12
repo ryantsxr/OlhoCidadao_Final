@@ -1,0 +1,50 @@
+# Impede listagem de diretórios (ex.: abrir /img/ ou /uploads/ sem um
+# arquivo específico e ver a lista de tudo que tem lá dentro).
+Options -Indexes
+
+# Tipo correto do manifesto do PWA (app instalável).
+AddType application/manifest+json .webmanifest
+AddType font/woff2 .woff2
+
+# Arquivos ocultos (.git, .env, .user.ini...) nunca são servidos.
+<FilesMatch "^\.(?!well-known$)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>
+
+# Front controller: se o que foi pedido é um arquivo ou pasta que existe
+# de verdade aqui dentro de public/ (um .css, .js, uma imagem, um arquivo
+# em uploads/), serve ele normalmente. Se não existir, quem responde é o
+# index.php, que decide o que mostrar (login, dashboard, denúncia etc.)
+# através do Router.
+RewriteEngine On
+
+# Contato para quem encontrar uma falha de segurança (RFC 9116).
+RewriteRule ^\.well-known/security\.txt$ index.php?rota=security-txt [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+RewriteRule ^ index.php [L]
+
+# Etapa 5 — compressão estática (se os módulos estiverem disponíveis).
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/css text/javascript application/javascript application/json image/svg+xml text/html
+</IfModule>
+# Arquivos públicos com cache validado pelo navegador; o service worker usa rede primeiro.
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js|svg|png|jpg|jpeg|webp|ico|woff2|webmanifest)$">
+        Header set Cache-Control "public, max-age=0, must-revalidate"
+    </FilesMatch>
+    # Proteções também para os arquivos estáticos (as páginas PHP já enviam as suas).
+    <FilesMatch "\.(css|js|svg|png|jpg|jpeg|webp|ico|woff2|webmanifest|html|txt)$">
+        Header set X-Content-Type-Options "nosniff"
+        Header set X-Frame-Options "SAMEORIGIN"
+        Header set Referrer-Policy "origin"
+    </FilesMatch>
+    <FilesMatch "\.(html|svg)$">
+        Header set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'self'"
+    </FilesMatch>
+</IfModule>

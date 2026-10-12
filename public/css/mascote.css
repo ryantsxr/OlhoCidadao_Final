@@ -1,0 +1,167 @@
+/* =========================================================================
+   Olhinho — mascote 3D no painel esquerdo dos passos da denúncia (v0.50)
+   ========================================================================= */
+
+.le-marca {
+    font-family: 'Sora', 'Poppins', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #fff;
+    text-decoration: none;
+    margin-bottom: 4px;
+}
+.le-marca span { color: #22c55e; }
+
+.mascote {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.mascote-3d {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    height: clamp(220px, 34vh, 320px);
+    cursor: pointer;
+    border-radius: 24px;
+    outline-offset: 4px;
+}
+.mascote-3d canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+/* Chão: uma elipse suave embaixo do boneco, dá a sensação de "palco". */
+.mascote-3d::after {
+    content: "";
+    position: absolute;
+    left: 15%;
+    right: 15%;
+    bottom: 2px;
+    height: 22px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(34, 197, 94, .28), rgba(34, 197, 94, 0) 70%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Imagem de reserva (sem WebGL ou enquanto o 3D carrega). */
+.mascote-reserva {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: opacity .3s;
+    animation: mascote-respira 3s ease-in-out infinite;
+}
+.mascote-3d.mascote-pronto .mascote-reserva { opacity: 0; pointer-events: none; }
+
+@keyframes mascote-respira {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+/* Balão de fala, em cima do boneco. */
+.mascote-balao {
+    position: relative;
+    min-height: 0;
+    max-width: 290px;
+    padding: 10px 14px;
+    margin-bottom: 4px;
+    border-radius: 16px;
+    background: #ffffff;
+    color: #13202f;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.35;
+    text-align: center;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .28);
+    opacity: 0;
+    transform: translateY(6px) scale(.96);
+    transition: opacity .22s ease, transform .22s ease;
+    visibility: hidden;
+}
+.mascote-balao::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -8px;
+    width: 16px;
+    height: 16px;
+    background: inherit;
+    transform: translateX(-50%) rotate(45deg);
+    border-radius: 3px;
+}
+.mascote-balao.visivel { opacity: 1; transform: none; visibility: visible; }
+.mascote-balao.saindo { opacity: 0; transform: translateY(4px) scale(.98); }
+
+.mascote-ajuda {
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(34, 197, 94, .55);
+    background: rgba(34, 197, 94, .12);
+    color: #d9fbe5;
+    font: 600 13px 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+}
+.mascote-ajuda:hover { background: rgba(34, 197, 94, .22); transform: translateY(-1px); }
+.mascote-ajuda i { color: #4ade80; }
+
+/* O painel agora tem o mascote no lugar do logo grande: menos respiro em cima. */
+.lado-esquerdo .le-conteudo { padding-top: 6px; }
+.lado-esquerdo .le-passos { margin-top: 4px; }
+
+/* Telas baixas (notebook 768px): mascote um pouco menor para caber tudo. */
+@media (max-height: 760px) and (min-width: 801px) {
+    .mascote-3d { height: 210px; }
+    .le-marca { font-size: 22px; }
+    .le-passos small { display: none; }
+}
+
+/* Tema claro */
+body.tema-claro .le-marca { color: #1c2431; }
+body.tema-claro .le-marca span { color: #15803d; }
+body.tema-claro .mascote-balao { background: #1c2431; color: #fff; }
+body.tema-claro .mascote-ajuda { color: #14532d; background: #e7f6ec; border-color: #86d3a1; }
+body.tema-claro .mascote-ajuda i { color: #15803d; }
+
+body.alto-contraste .mascote-balao { background: #000; color: #fff; border: 2px solid #fff; }
+body.alto-contraste .mascote-ajuda { background: #000; color: #fff; border: 2px solid #fff; }
+
+/* Celular: o painel vira uma faixa no topo, com o mascote pequeno ao lado do balão. */
+@media (max-width: 800px) {
+    .le-marca { display: none; }
+    .mascote {
+        flex-direction: row-reverse;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 0;
+    }
+    .mascote-3d { width: 112px; height: 132px; flex: 0 0 112px; }
+    .mascote-balao {
+        flex: 1;
+        max-width: 230px;
+        font-size: 13px;
+        text-align: left;
+        margin: 0;
+    }
+    .mascote-balao::after { left: -7px; right: auto; top: 50%; bottom: auto; transform: translateY(-50%) rotate(45deg); }
+    .mascote-ajuda { display: none; } /* no celular, tocar no boneco já abre o chat */
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mascote-reserva { animation: none; }
+    .mascote-balao { transition: none; }
+}

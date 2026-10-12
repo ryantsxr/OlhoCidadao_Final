@@ -1,0 +1,7 @@
+{
+    "name": "olhocidadao/olhocidadao",
+    "description": "Dependências opcionais do Olho Cidadão (hoje: envio de e-mail via SMTP).",
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
+}

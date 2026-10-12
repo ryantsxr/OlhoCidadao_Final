@@ -1,0 +1,378 @@
+/* =========================================================================
+   Acabamento visual (v0.47) — carregado em todas as páginas via _pwa.php
+   Avisos (toasts), animações leves, hover dos botões e foco pelo teclado.
+   ========================================================================= */
+
+/* Evita o "piscar" do tema escuro antes do tema claro ser aplicado. */
+html.pre-tema-claro body { background: #F4F7F6; }
+
+/* ------------------------------------------------------------- Avisos */
+.oc-toasts {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: min(380px, calc(100vw - 32px));
+    pointer-events: none;
+}
+
+.oc-toast {
+    --cor: #ef4444;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 12px 16px 16px;
+    border-radius: 12px;
+    background: #1f2836;
+    color: #f3f5f8;
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-left: 4px solid var(--cor);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, .35);
+    font-family: Poppins, system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+    overflow: hidden;
+    pointer-events: auto;
+    animation: oc-toast-entrar .32s cubic-bezier(.2, .9, .3, 1.2);
+}
+
+.oc-toast-sucesso { --cor: #22c55e; }
+.oc-toast-erro    { --cor: #ef4444; }
+.oc-toast-aviso   { --cor: #f59e0b; }
+.oc-toast-info    { --cor: #3d8bfd; }
+
+.oc-toast-icone { color: var(--cor); font-size: 18px; margin-top: 1px; }
+.oc-toast-texto { flex: 1; }
+
+.oc-toast-fechar {
+    /* o "button { width:100%; height:48px }" do login.css não pode esticar este botão */
+    width: auto;
+    height: auto;
+    flex: none;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    opacity: .55;
+    cursor: pointer;
+    padding: 2px 4px;
+    font-size: 14px;
+    line-height: 1;
+}
+.oc-toast-fechar:hover { opacity: 1; }
+
+.oc-toast-barra {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 100%;
+    background: var(--cor);
+    opacity: .7;
+    transform-origin: left;
+    animation: oc-toast-tempo var(--duracao, 4500ms) linear forwards;
+}
+.oc-toast.pausado .oc-toast-barra { animation-play-state: paused; }
+
+.oc-toast.saindo { animation: oc-toast-sair .26s ease-in forwards; }
+
+@keyframes oc-toast-entrar {
+    from { opacity: 0; transform: translateX(40px) scale(.96); }
+    to   { opacity: 1; transform: none; }
+}
+@keyframes oc-toast-sair {
+    to { opacity: 0; transform: translateX(40px); }
+}
+@keyframes oc-toast-tempo {
+    from { transform: scaleX(1); }
+    to   { transform: scaleX(0); }
+}
+
+body.tema-claro .oc-toast {
+    background: #ffffff;
+    color: #1c2431;
+    border-color: #e2e8f0;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, .14);
+}
+body.tema-claro .oc-toast-sucesso .oc-toast-icone { color: #15803d; }
+body.tema-claro .oc-toast-aviso .oc-toast-icone   { color: #b45309; }
+
+body.alto-contraste .oc-toast {
+    background: #000;
+    color: #fff;
+    border: 2px solid #fff;
+    border-left-width: 6px;
+}
+
+@media (max-width: 480px) {
+    .oc-toasts { top: auto; bottom: 16px; left: 16px; right: 16px; width: auto; }
+    @keyframes oc-toast-entrar { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+    @keyframes oc-toast-sair   { to { opacity: 0; transform: translateY(20px); } }
+}
+
+/* O aviso antigo (configuracoes.js) não é mais usado; se aparecer, esconde. */
+.toast-container { display: none !important; }
+
+/* ---------------------------------------------------------- Animações */
+.oc-entrar {
+    opacity: 0;
+    translate: 0 14px;
+}
+.oc-entrar.oc-visivel {
+    opacity: 1;
+    translate: 0 0;
+    transition: opacity .45s ease var(--oc-atraso, 0ms), translate .45s cubic-bezier(.2, .8, .2, 1) var(--oc-atraso, 0ms);
+}
+
+/* Botões levantam um pouco ao passar o mouse. */
+:where(button, a)[class*="btn"]:not(:disabled),
+:where(button[type="submit"], .popup-botao, .btn-primario-mapa) {
+    transition: transform .15s ease, box-shadow .15s ease, filter .15s ease, background-color .15s ease;
+}
+@media (hover: hover) {
+    :where(button, a)[class*="btn"]:not(:disabled):hover,
+    :where(button[type="submit"]):not(:disabled):hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, .22);
+    }
+}
+:where(button, a)[class*="btn"]:not(:disabled):active,
+:where(button[type="submit"]):not(:disabled):active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* ------------------------------------------------- Foco pelo teclado */
+:focus-visible {
+    outline: 3px solid #22c55e;
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+body.tema-claro :focus-visible { outline-color: #15803d; }
+body.alto-contraste :focus-visible { outline-color: #ffff00; }
+
+/* ------------------------------------------------- Reduzir movimento */
+@media (prefers-reduced-motion: reduce) {
+    .oc-entrar, .oc-entrar.oc-visivel { opacity: 1; translate: none; transition: none; }
+    .oc-toast, .oc-toast.saindo, .oc-toast-barra { animation: none; }
+    :where(button, a)[class*="btn"]:hover { transform: none !important; }
+}
+
+/* ------------------------------------------- Olho do logo que segue o mouse */
+.olho-vivo {
+    position: relative;
+    display: inline-block;
+    line-height: 0;
+}
+.olho-vivo > img { display: block; }
+.olho-pupila {
+    position: absolute;
+    left: 50.32%;
+    top: 42.15%;
+    width: 13.6%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background:
+        radial-gradient(circle at 34% 32%, #ffffff 0 13%, transparent 14%),
+        radial-gradient(circle at 50% 50%, #0a0f24 0 62%, #00001a 100%);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .25);
+    transition: transform .12s ease-out;
+    pointer-events: none;
+}
+/* Piscada: a pupila "fecha" rapidinho. */
+.olho-vivo.piscando .olho-pupila { animation: oc-piscar-pupila .22s ease-in-out; }
+@keyframes oc-piscar-pupila {
+    50% { scale: 1 .1; }
+}
+
+/* ------------------------------------------- Carregando: olho piscando */
+.oc-carregando {
+    position: fixed;
+    inset: 0;
+    z-index: 9990;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(12, 17, 28, .55);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .2s ease, visibility .2s;
+}
+.oc-carregando.ativo { opacity: 1; visibility: visible; }
+.oc-carregando-caixa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 22px 30px 18px;
+    border-radius: 18px;
+    background: #1f2836;
+    border: 1px solid rgba(255, 255, 255, .08);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .4);
+    color: #e7ebf2;
+    font: 500 14px Poppins, system-ui, sans-serif;
+}
+.oc-olho-svg { width: 96px; height: 56px; overflow: visible; }
+.oc-olho-palpebra {
+    transform-origin: 60px 35px;
+    animation: oc-piscar 2.2s ease-in-out infinite;
+}
+.oc-olho-pupila { animation: oc-olhar 2.2s ease-in-out infinite; }
+@keyframes oc-piscar {
+    0%, 38%, 50%, 100% { transform: scaleY(1); }
+    44% { transform: scaleY(.06); }
+}
+@keyframes oc-olhar {
+    0%, 20% { transform: translateX(0); }
+    30%, 40% { transform: translateX(-7px); }
+    60%, 75% { transform: translateX(7px); }
+    90%, 100% { transform: translateX(0); }
+}
+body.tema-claro .oc-carregando { background: rgba(244, 247, 246, .6); }
+body.tema-claro .oc-carregando-caixa { background: #fff; color: #1c2431; border-color: #e2e8f0; box-shadow: 0 20px 50px rgba(15, 23, 42, .15); }
+
+@media (prefers-reduced-motion: reduce) {
+    .olho-pupila { transition: none; }
+    .oc-olho-palpebra, .oc-olho-pupila { animation: none; }
+}
+
+/* ------------------------------------------- Luz que segue o mouse nos cartões */
+.oc-luz { position: relative; isolation: isolate; }
+.oc-luz::after,
+.oc-luz::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .25s ease;
+}
+/* brilho suave por dentro */
+.oc-luz::after {
+    z-index: -1;
+    background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(34, 197, 94, .13), transparent 65%);
+}
+/* borda em degradê que acende perto do cursor */
+.oc-luz::before {
+    z-index: 1;
+    padding: 1.5px;
+    background:
+        radial-gradient(180px circle at var(--mx, 50%) var(--my, 50%), rgba(74, 222, 128, .95), rgba(56, 189, 248, .5) 45%, transparent 75%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.oc-luz:hover::after,
+.oc-luz:hover::before { opacity: 1; }
+body.tema-claro .oc-luz::after {
+    background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(22, 163, 74, .08), transparent 65%);
+}
+body.alto-contraste .oc-luz::after,
+body.alto-contraste .oc-luz::before { display: none; }
+
+/* ------------------------------------------- Barra fixa embaixo (celular) */
+.barra-inferior { display: none; }
+@media (max-width: 900px) {
+    .barra-inferior {
+        position: fixed;
+        left: 10px;
+        right: 10px;
+        bottom: calc(10px + env(safe-area-inset-bottom));
+        z-index: 900;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-end;
+        padding: 6px 6px 7px;
+        border-radius: 20px;
+        background: rgba(31, 40, 54, .92);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, .08);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
+    }
+    body:has(.barra-inferior) { padding-bottom: calc(92px + env(safe-area-inset-bottom)); }
+    body.menu-bloqueado .barra-inferior { display: none; }
+    .barra-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        padding: 6px 2px 2px;
+        color: #8a94a6;
+        text-decoration: none;
+        font: 500 10.5px Poppins, system-ui, sans-serif;
+        -webkit-tap-highlight-color: transparent;
+        transition: color .2s;
+    }
+    .barra-icone {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 28px;
+        border-radius: 14px;
+        font-size: 17px;
+        transition: background .2s, transform .15s;
+    }
+    .barra-item.ativo { color: #4ade80; }
+    .barra-item.ativo .barra-icone { background: rgba(34, 197, 94, .16); }
+    .barra-item:active .barra-icone { transform: scale(.9); }
+    /* botão central "+" em destaque */
+    .barra-central .barra-icone {
+        width: 54px;
+        height: 54px;
+        margin-top: -26px;
+        border-radius: 18px;
+        background: #019B38;
+        color: #fff;
+        font-size: 22px;
+        box-shadow: 0 8px 20px rgba(1, 155, 56, .45), 0 0 0 5px rgba(24, 31, 44, 1);
+    }
+    .barra-central.ativo .barra-icone { background: #22c55e; }
+    .barra-central .barra-rotulo { color: #cfd5df; }
+
+    body.tema-claro .barra-inferior { background: rgba(255, 255, 255, .94); border-color: #e2e8f0; box-shadow: 0 10px 30px rgba(15, 23, 42, .12); }
+    body.tema-claro .barra-item { color: #667085; }
+    body.tema-claro .barra-item.ativo { color: #15803d; }
+    body.tema-claro .barra-item.ativo .barra-icone { background: #e6f4ea; }
+    body.tema-claro .barra-central .barra-icone { box-shadow: 0 8px 20px rgba(1, 155, 56, .35), 0 0 0 5px #f4f7f6; }
+    body.tema-claro .barra-central .barra-rotulo { color: #344054; }
+    /* os avisos sobem para não ficar atrás da barra */
+    body:has(.barra-inferior) .oc-toasts { bottom: calc(100px + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 900px) {
+    body.tema-claro .barra-central.ativo .barra-icone,
+    body.tema-claro .barra-central .barra-icone { background: #019B38; color: #fff; }
+    body.tema-claro .barra-central.ativo .barra-icone { background: #15803d; }
+}
+
+/* ===== v0.50: denúncia por voz (botão de microfone ao lado da descrição) ===== */
+.linha-rotulo-voz { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.linha-rotulo-voz label { margin-bottom: 0 !important; }
+.btn-voz {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 999px;
+    border: 1px solid rgba(34, 197, 94, .55); background: rgba(34, 197, 94, .12);
+    color: #86efac; font: 600 12px 'Poppins', sans-serif; cursor: pointer;
+}
+.btn-voz:hover { background: rgba(34, 197, 94, .22); }
+.btn-voz.ouvindo { background: #dc2626; border-color: #dc2626; color: #fff; animation: voz-pulso 1.2s infinite; }
+@keyframes voz-pulso { 0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, .55); } 100% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); } }
+body.tema-claro .btn-voz { color: #15803d; background: #e7f6ec; border-color: #86d3a1; }
+body.tema-claro .btn-voz.ouvindo { color: #fff; background: #dc2626; }
+@media (prefers-reduced-motion: reduce) { .btn-voz.ouvindo { animation: none; } }
+
+/* ===== v0.50: selo "histórico íntegro" na consulta do protocolo ===== */
+.selo-integridade { display: flex; gap: 10px; align-items: flex-start; margin-top: 16px; padding: 12px 14px; border-radius: 12px; font-size: 13.5px; line-height: 1.45; }
+.selo-integridade.ok { background: rgba(22, 163, 74, .12); border: 1px solid rgba(34, 197, 94, .4); color: #bbf7d0; }
+.selo-integridade.falha { background: rgba(220, 38, 38, .12); border: 1px solid rgba(248, 113, 113, .45); color: #fecaca; }
+.selo-integridade i { margin-top: 2px; }
+body.tema-claro .selo-integridade.ok { color: #14532d; background: #e7f6ec; }
+body.tema-claro .selo-integridade.falha { color: #7f1d1d; background: #fee2e2; }

@@ -1,0 +1,115 @@
+/* Quadro kanban do admin (v0.48) */
+.conteudo-kanban header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.btn-kanban-lista {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 14px; border-radius: 10px;
+    border: 1px solid var(--border-color); color: var(--text-main);
+    text-decoration: none; font-size: 13px; font-weight: 500;
+    background: var(--bg-card);
+}
+.kanban {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(250px, 1fr));
+    gap: 14px;
+    align-items: start;
+    margin-top: 20px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+.kanban-coluna {
+    --cor: #f2b705;
+    background: color-mix(in srgb, var(--bg-card) 70%, transparent);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 12px;
+    min-height: 220px;
+    transition: border-color .15s, background .15s, box-shadow .15s;
+}
+.col-analise { --cor: #3d8bfd; }
+.col-aguardando { --cor: #a78bfa; }
+.col-resolvido { --cor: #22c55e; }
+.kanban-coluna-topo { display: flex; align-items: center; gap: 10px; padding: 4px 4px 12px; border-bottom: 2px solid var(--cor); margin-bottom: 12px; }
+.kanban-coluna-icone { width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--cor) 18%, transparent); color: var(--cor); flex-shrink: 0; }
+.kanban-coluna-topo div { flex: 1; min-width: 0; }
+.kanban-coluna-topo h2 { margin: 0; font-size: 14px; color: var(--text-main); }
+.kanban-coluna-topo small { font-size: 11.5px; color: var(--text-sub); }
+.kanban-contador { min-width: 28px; padding: 2px 8px; border-radius: 999px; text-align: center; background: color-mix(in srgb, var(--cor) 18%, transparent); color: var(--cor); font-weight: 700; font-size: 13px; }
+.kanban-cartoes { display: flex; flex-direction: column; gap: 10px; min-height: 120px; }
+
+.kanban-cartao {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--tom);
+    border-radius: 12px;
+    padding: 10px 12px 12px;
+    cursor: grab;
+    transition: transform .15s, box-shadow .15s, opacity .15s;
+}
+.kanban-cartao:hover { box-shadow: 0 8px 20px rgba(0, 0, 0, .25); transform: translateY(-1px); }
+.kanban-coluna.travada .kanban-cartao { cursor: default; opacity: .85; }
+.kanban-cartao.arrastando { opacity: .4; transform: rotate(2deg); }
+.kanban-cartao.salvando { opacity: .6; pointer-events: none; }
+.kanban-cartao.movido { animation: kanban-pulso .7s ease; }
+@keyframes kanban-pulso { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, .6); } 100% { box-shadow: 0 0 0 12px rgba(34, 197, 94, 0); } }
+.kanban.em-arraste .kanban-coluna:not(.travada) { border-style: dashed; }
+.kanban.em-arraste .kanban-coluna.travada { opacity: .5; }
+.kanban-coluna.alvo { border-color: var(--cor); background: color-mix(in srgb, var(--cor) 10%, var(--bg-card)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--cor) 25%, transparent); }
+
+.kanban-cartao-topo { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.kanban-cat { font-size: 12px; font-weight: 600; color: var(--tom); }
+.kanban-titulo { margin: 6px 0 8px; color: var(--text-main); font-size: 13.5px; line-height: 1.4; user-select: none; }
+.kanban-ver { text-decoration: none; }
+.kanban-ver i { font-size: 9px; margin-left: 2px; }
+.kanban-ver:hover { text-decoration: underline; }
+.kanban-meta { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-size: 11.5px; color: var(--text-sub); }
+.kanban-selos { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.kanban-selo { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; background: var(--bg-body); color: var(--text-sub); font-size: 11px; }
+.kanban-selo i { font-size: 10px; }
+.selo-atrasada { background: rgba(239, 68, 68, .15); color: #f87171; }
+.prio-urgente .selo-prio { background: rgba(239, 68, 68, .15); color: #f87171; }
+.prio-alta .selo-prio { background: rgba(245, 158, 11, .15); color: #fbbf24; }
+.prio-baixa .selo-prio { background: rgba(148, 163, 184, .15); }
+
+.kanban-mover { position: relative; }
+.kanban-mover-btn { border: 0; background: transparent; color: var(--text-sub); width: 28px; height: 24px; border-radius: 6px; cursor: pointer; }
+.kanban-mover-btn:hover { background: var(--bg-body); color: var(--text-main); }
+.kanban-mover-menu { position: absolute; right: 0; top: 26px; z-index: 20; min-width: 210px; padding: 6px; border-radius: 10px; background: var(--bg-menu); border: 1px solid var(--border-color); box-shadow: 0 12px 28px rgba(0, 0, 0, .35); }
+.kanban-mover-menu[hidden] { display: none; }
+.kanban-mover-menu button { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 10px; border: 0; border-radius: 7px; background: transparent; color: var(--text-main); font: inherit; font-size: 13px; text-align: left; cursor: pointer; }
+.kanban-mover-menu button:hover, .kanban-mover-menu button:focus-visible { background: var(--bg-card); }
+.kanban-mover-menu i { font-size: 11px; color: var(--text-sub); }
+
+.kanban-vazio { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 26px 10px; color: var(--text-sub); font-size: 13px; border: 1px dashed var(--border-color); border-radius: 12px; }
+.kanban-vazio[hidden] { display: none; }
+.kanban-vazio i { font-size: 20px; }
+.kanban-mais { display: block; text-align: center; font-size: 12.5px; color: var(--accent); padding: 6px; }
+
+.kanban-dialogo-fundo { position: fixed; inset: 0; z-index: 9980; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0, 0, 0, .55); backdrop-filter: blur(3px); }
+.kanban-dialogo { width: min(440px, 100%); padding: 22px; border-radius: 16px; background: var(--bg-menu); border: 1px solid var(--border-color); color: var(--text-main); box-shadow: 0 20px 50px rgba(0, 0, 0, .45); animation: oc-toast-entrar .25s ease; }
+.kanban-dialogo h3 { margin: 0 0 6px; font-size: 17px; display: flex; gap: 10px; align-items: center; }
+.kanban-dialogo h3 i { color: #a78bfa; }
+.kanban-dialogo p { margin: 0 0 14px; color: var(--text-sub); font-size: 13.5px; }
+.kanban-dialogo label { font-size: 12.5px; color: var(--text-sub); }
+.kanban-dialogo textarea { width: 100%; min-height: 80px; margin-top: 6px; padding: 10px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-main); font: inherit; font-size: 13.5px; resize: vertical; box-sizing: border-box; }
+.kanban-dialogo-acoes { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+.kanban-dialogo-acoes button { padding: 9px 16px; border-radius: 10px; font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+.kd-cancelar { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
+.kd-confirmar { background: #019B38; border: 0; color: #fff; }
+
+@media (max-width: 900px) {
+    .kanban { grid-template-columns: repeat(4, minmax(78vw, 1fr)); scroll-snap-type: x mandatory; }
+    .kanban-coluna { scroll-snap-align: start; }
+}
+body.tema-claro .kanban-cartao:hover { box-shadow: 0 8px 20px rgba(15, 23, 42, .08); }
+body.tema-claro .selo-atrasada, body.tema-claro .prio-urgente .selo-prio { color: #b91c1c; }
+body.tema-claro .prio-alta .selo-prio { color: #b45309; }
+
+/* Etapa 3: filtros compactos usando a paleta do quadro existente. */
+.kanban-filtros{display:flex;align-items:end;gap:10px;flex-wrap:wrap;margin:16px 0 20px;padding:13px 16px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.12);border-radius:12px}
+.kanban-filtros label{display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--cor-texto,#e5e7eb);flex:1 1 145px;max-width:250px}
+.kanban-filtros select,.kanban-filtros input{width:100%;min-width:0;padding:9px 10px;border:1px solid rgba(255,255,255,.16);border-radius:8px;background:#1e293b;color:#f8fafc;font:inherit}
+.kanban-filtros button,.kanban-filtros a{padding:10px 15px;border-radius:9px;font:inherit;font-size:13px;white-space:nowrap;cursor:pointer}
+.kanban-filtros button{background:#16a34a;color:#fff;border:0;font-weight:600}
+.kanban-filtros a{border:1px solid rgba(255,255,255,.2);color:#e5e7eb;text-decoration:none}
+@media(max-width:600px){.kanban-filtros label{flex:1 1 135px}.kanban-filtros button,.kanban-filtros a{flex:1;text-align:center}}

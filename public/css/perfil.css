@@ -1,0 +1,170 @@
+.perfil-container {
+  background: #252f40;
+  padding: 40px;
+  border-radius: 20px;
+  margin-top: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* FOTO */
+.foto-sessao {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 15px;
+}
+
+.avatar-wrapper img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #019B38;
+}
+
+.btn-trocar-foto {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #019B38;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-trocar-foto:hover {
+  background: #019B38;
+}
+
+/* GRID FORMULÁRIO */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo label {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.campo input {
+  background: #384255;
+  border: none;
+  padding: 12px 15px;
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+}
+
+.campo input:focus {
+  outline: 1px solid #019B38;
+}
+
+.divisor {
+  margin: 40px 0;
+  border: 0;
+  border-top: 1px solid #384255;
+}
+
+h3 {
+  margin-bottom: 20px;
+  color: #019B38;
+}
+
+.acoes {
+  margin-top: 40px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-salvar {
+  background: #019B38;
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-salvar:hover {
+  background: #019B38;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .perfil-container {
+    padding: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .perfil-container {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .avatar-wrapper {
+    width: 100px;
+    height: 100px;
+  }
+
+  .acoes {
+    justify-content: stretch;
+  }
+
+  .btn-salvar {
+    width: 100%;
+  }
+}
+
+/* =========================================
+   TEMA CLARO - PERFIL
+   ========================================= */
+body.tema-claro .perfil-container {
+  background: #ffffff !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+body.tema-claro .campo input {
+  background: #f0f4f3 !important;
+  color: #1c2431 !important;
+  border: 1px solid #e2e8f0;
+}
+
+body.tema-claro .campo label {
+  color: #555555 !important;
+}
+
+body.tema-claro .divisor {
+  border-top: 1px solid #e2e8f0;
+}
+
+
+.campo .obrigatorio {
+  color: #e74c3c;
+  font-weight: 700;
+}

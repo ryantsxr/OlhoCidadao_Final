@@ -1,0 +1,20 @@
+/* Histórico íntegro (v0.50) */
+.integ-status {
+    display: flex; align-items: center; gap: 18px;
+    padding: 22px 24px; border-radius: 18px; margin-bottom: 18px;
+    border: 1px solid rgba(255, 255, 255, .08);
+}
+.integ-status.ok { background: linear-gradient(135deg, rgba(22, 163, 74, .22), rgba(22, 163, 74, .06)); border-color: rgba(34, 197, 94, .4); }
+.integ-status.falha { background: linear-gradient(135deg, rgba(220, 38, 38, .25), rgba(220, 38, 38, .06)); border-color: rgba(248, 113, 113, .5); }
+.integ-icone { width: 58px; height: 58px; flex: 0 0 58px; border-radius: 16px; display: grid; place-items: center; font-size: 26px; background: rgba(255, 255, 255, .08); }
+.integ-status.ok .integ-icone { color: #4ade80; }
+.integ-status.falha .integ-icone { color: #fca5a5; }
+.integ-status h2 { font-size: 20px; margin-bottom: 4px; color: var(--text-main, #fff); }
+.integ-status p { color: var(--text-muted, #cbd5e1); font-size: 14px; line-height: 1.5; }
+.integ-problema i { color: #f87171; }
+.integ-explica { margin-top: 20px; padding: 20px 22px; border-radius: 16px; background: var(--bg-card, #2d3748); border: 1px solid var(--border-color, rgba(255,255,255,.08)); }
+.integ-explica h2 { font-size: 17px; margin-bottom: 10px; color: var(--text-main, #fff); display: flex; gap: 8px; align-items: center; }
+.integ-explica ol { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; color: var(--text-muted, #cbd5e1); font-size: 14px; line-height: 1.55; }
+.integ-explica code, .integ-dica code { background: rgba(255,255,255,.08); padding: 1px 6px; border-radius: 6px; font-size: 12.5px; }
+.integ-dica { font-size: 13px; color: var(--text-muted, #94a3b8); margin-top: 10px; }
+body.tema-claro .integ-status h2, body.tema-claro .integ-explica h2 { color: #1c2431; }

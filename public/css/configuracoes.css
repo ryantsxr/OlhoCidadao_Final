@@ -1,0 +1,374 @@
+/* Container Principal das Configurações */
+.config-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 24px;
+  align-items: start;
+  max-width: 1120px;
+  margin-top: 20px;
+}
+
+.painel-config {
+  background: #1c2431;
+  border-radius: 20px;
+  padding: 30px;
+  margin-top: 0;
+  max-width: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.header-config h1 {
+  font-size: 32px;
+  color: white;
+}
+.header-config p {
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+/* Cada linha de configuração */
+.config-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #2a3649;
+}
+
+.config-item:last-of-type {
+  border-bottom: none;
+}
+
+.config-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.config-info i {
+  font-size: 24px;
+  color: #019b38;
+  background: #252f40;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.config-info h3 {
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.config-info p {
+  color: #8a94a6;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+/* Estilo para Dropdowns (Select) */
+select {
+  background: #252f40;
+  color: white;
+  border: 1px solid #2a3649;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}
+select:focus {
+  border-color: #019b38;
+}
+
+/* O Switch (Botão liga/desliga tipo celular) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #4a5568;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #019b38;
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* =========================================
+   RESPONSIVO
+   ========================================= */
+@media (max-width: 768px) {
+  .painel-config {
+    max-width: 100%;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .config-item {
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .config-info {
+    width: 100%;
+  }
+
+  select {
+    width: 100%;
+  }
+}
+
+/* Botão Salvar */
+.btn-salvar {
+  background: #019b38;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 30px;
+  width: 100%;
+  transition: 0.3s;
+}
+
+.btn-salvar:hover {
+  background: #019b38;
+}
+
+/* =========================================
+   TEMA CLARO (Ajustado)
+   ========================================= */
+body.tema-claro {
+  background-color: #f4f7f6 !important;
+  color: #333333 !important;
+}
+
+body.tema-claro .menu, 
+body.tema-claro .painel-config,
+body.tema-claro .card,
+body.tema-claro .categoria,       /* Adicionado para corrigir as categorias */
+body.tema-claro .usuario-card,    /* Adicionado para corrigir o card do usuário */
+body.tema-claro .caixa-denuncia,
+body.tema-claro .denuncia {
+  background-color: #ffffff !important;
+  color: #1c2431 !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+body.tema-claro h1,
+body.tema-claro h2,
+body.tema-claro h3,
+body.tema-claro p,
+body.tema-claro span,
+body.tema-claro strong {
+  color: #1c2431 !important;
+}
+
+/* =========================================
+   TEMA CLARO - CONFIGURAÇÕES
+   ========================================= */
+body.tema-claro {
+  background-color: #f4f7f6 !important;
+  color: #333333 !important;
+}
+
+body.tema-claro .menu,
+body.tema-claro .painel-config {
+  background-color: #ffffff !important;
+  color: #1c2431 !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+body.tema-claro .header-config h1,
+body.tema-claro .config-info h3 {
+  color: #1c2431 !important;
+}
+
+body.tema-claro .header-config p,
+body.tema-claro .config-info p {
+  color: #555555 !important;
+}
+
+body.tema-claro .config-item {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+body.tema-claro .config-info i,
+body.tema-claro select {
+  background: #f0f4f3 !important;
+  color: #1c2431 !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* =========================================
+   PRÉ-VISUALIZAÇÃO
+   ========================================= */
+.config-preview {
+  position: sticky;
+  top: 20px;
+  background: #1c2431;
+  border-radius: 20px;
+  padding: 26px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+.config-preview h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
+
+.config-preview .prev-sub {
+  color: #8a94a6;
+  font-size: 13px;
+  margin: 6px 0 20px;
+  line-height: 1.5;
+}
+
+.prev-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: #252f40;
+  border: 1px solid #2a3649;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.prev-icone {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(245, 179, 1, 0.16);
+}
+
+.prev-icone i {
+  color: #f5b301;
+  font-size: 18px;
+}
+
+.prev-corpo strong {
+  display: block;
+  font-size: 15px;
+  color: white;
+}
+
+.prev-corpo p {
+  color: #aeb6c5;
+  font-size: 13px;
+  margin: 4px 0;
+  line-height: 1.45;
+}
+
+.prev-corpo small {
+  color: #8a94a6;
+  font-size: 12px;
+}
+
+.prev-pill {
+  display: inline-block;
+  margin: 14px 0 0;
+  padding: 7px 14px;
+  border-radius: 20px;
+  background: #2563eb;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.prev-botao {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 13px;
+  border: 0;
+  border-radius: 10px;
+  background: #019b38;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+@media (max-width: 1000px) {
+  .config-layout {
+    grid-template-columns: 1fr;
+  }
+  .config-preview {
+    position: static;
+  }
+}
+
+body.tema-claro .config-preview {
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+body.tema-claro .config-preview h3,
+body.tema-claro .prev-corpo strong {
+  color: #1c2431 !important;
+}
+
+body.tema-claro .config-preview .prev-sub,
+body.tema-claro .prev-corpo p {
+  color: #555555 !important;
+}
+
+body.tema-claro .prev-item {
+  background: #f4f7f6;
+  border-color: #e2e8f0;
+}
+
+body.tema-claro .prev-pill {
+  color: #ffffff !important;
+}
+
+/* QR code da verificação em duas etapas (v1.0.3) */
+.totp-qr { width: 200px; height: 200px; margin: 12px 0; border-radius: 12px; overflow: hidden; background: #fff; }
+.totp-qr svg { width: 100%; height: 100%; display: block; }

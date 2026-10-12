@@ -1,0 +1,196 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins, sans-serif;
+}
+
+body {
+    background: #181F2C;
+    color: #E7EBF2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 60px;
+}
+
+.pagina-topo {
+    width: 100%;
+    max-width: 780px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.pagina-topo .marca {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pagina-topo img {
+    height: 42px;
+}
+
+.pagina-topo .marca span {
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.pagina-topo .marca span span {
+    color: #019B38;
+}
+
+.pagina-topo a {
+    color: #019B38;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.pagina-topo a:hover {
+    text-decoration: underline;
+}
+
+.pagina-conteudo {
+    width: 100%;
+    max-width: 780px;
+    background: #252F40;
+    border-radius: 16px;
+    padding: 40px 45px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .35);
+}
+
+.pagina-conteudo h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.pagina-conteudo .subtitulo {
+    color: #AEB6C5;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.pagina-conteudo h2 {
+    font-size: 18px;
+    margin: 28px 0 10px;
+    color: #019B38;
+}
+
+.pagina-conteudo p,
+.pagina-conteudo li {
+    color: #C7CEDB;
+    line-height: 1.7;
+    font-size: 14.5px;
+}
+
+.pagina-conteudo ul,
+.pagina-conteudo ol {
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+
+.fluxo-passos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 20px 0 10px;
+}
+
+.fluxo-passos .passo {
+    flex: 1;
+    min-width: 150px;
+    background: #181F2C;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+}
+
+.fluxo-passos .passo i {
+    font-size: 22px;
+    color: #019B38;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.fluxo-passos .passo strong {
+    display: block;
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.fluxo-passos .passo p {
+    font-size: 12.5px;
+}
+
+.pagina-erro {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.pagina-erro i {
+    font-size: 60px;
+    color: #019B38;
+    margin-bottom: 20px;
+}
+
+.pagina-erro h1 {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.pagina-erro p {
+    margin-bottom: 25px;
+}
+
+.pagina-erro a {
+    display: inline-block;
+    background: #019B38;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .pagina-conteudo {
+        padding: 28px 22px;
+    }
+
+    .fluxo-passos {
+        flex-direction: column;
+    }
+}
+
+/* =========================================
+   TEMA CLARO — Sobre, Termos e páginas de erro (v0.47)
+   ========================================= */
+body.tema-claro { background: #F4F7F6; color: #1C2431; }
+body.tema-claro .pagina-topo .marca span { color: #1C2431; }
+body.tema-claro .pagina-topo a,
+body.tema-claro .pagina-topo .marca span span,
+body.tema-claro .pagina-conteudo h2,
+body.tema-claro .pagina-conteudo a { color: #017A2C; }
+body.tema-claro .pagina-conteudo {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+body.tema-claro .pagina-conteudo h1,
+body.tema-claro .pagina-erro h1,
+body.tema-claro .fluxo-passos .passo strong { color: #1C2431; }
+body.tema-claro .pagina-conteudo .subtitulo,
+body.tema-claro .pagina-erro p { color: #667085; }
+body.tema-claro .pagina-conteudo p,
+body.tema-claro .pagina-conteudo li,
+body.tema-claro .fluxo-passos .passo p { color: #344054; }
+body.tema-claro .fluxo-passos .passo { background: #F4F7F6; border: 1px solid #E2E8F0; }
+body.tema-claro .pagina-erro a { color: #FFFFFF; }

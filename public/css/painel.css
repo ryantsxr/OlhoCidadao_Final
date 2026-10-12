@@ -1,0 +1,167 @@
+/* Painel do cidadão (v0.49) */
+.saudacao { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.saudacao-icone {
+    width: 42px; height: 42px; border-radius: 14px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 20px; background: rgba(245, 179, 1, .15); color: #F5B301;
+}
+.saudacao-icone[data-periodo="fa-moon"] { background: rgba(167, 139, 250, .16); color: #a78bfa; }
+.saudacao-icone i { animation: oc-flutuar 4s ease-in-out infinite; }
+@keyframes oc-flutuar { 50% { transform: translateY(-3px) rotate(-6deg); } }
+
+/* mini gráficos nos cartões */
+.dash .card-stat { position: relative; overflow: hidden; }
+.sparkline { position: absolute; right: 14px; bottom: 12px; width: 38%; max-width: 130px; height: 34px; overflow: visible; opacity: .9; }
+.spark-area { fill: color-mix(in srgb, var(--tom, #019B38) 16%, transparent); }
+.spark-linha { fill: none; stroke: var(--tom, #019B38); stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 100; stroke-dashoffset: 100; animation: oc-traco-spark 1.2s .3s ease forwards; }
+.spark-ponto { fill: var(--tom, #019B38); }
+@keyframes oc-traco-spark { to { stroke-dashoffset: 0; } }
+
+/* impacto + dica */
+.painel-duplo { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; margin: 4px 0 30px; }
+.painel-duplo-baixo { grid-template-columns: 1.3fr 1fr; margin-top: 30px; }
+.card-impacto, .card-dica, .card-perto, .card-atividade {
+    background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px;
+    box-shadow: var(--shadow-card);
+}
+.card-impacto-topo { display: flex; gap: 14px; align-items: center; margin-bottom: 16px; }
+.card-impacto-topo h3 { margin: 0; font-size: 16px; color: var(--text-main); }
+.card-impacto-topo p { margin: 2px 0 0; font-size: 13px; color: var(--text-sub); }
+.impacto-numeros { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.impacto-numeros div { padding: 12px; border-radius: 12px; background: var(--bg-body); display: flex; flex-direction: column; gap: 2px; }
+.impacto-numeros strong { font-size: 24px; color: var(--text-main); line-height: 1.1; }
+.impacto-numeros span { font-size: 11.5px; color: var(--text-sub); line-height: 1.3; }
+.card-dica { display: flex; flex-direction: column; gap: 10px; background: linear-gradient(135deg, color-mix(in srgb, #F5B301 10%, var(--bg-card)), var(--bg-card)); }
+.card-dica-rotulo { font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: #F5B301; }
+.card-dica p { margin: 0; flex: 1; font-size: 14px; line-height: 1.55; color: var(--text-main); }
+.card-dica p.trocando { animation: oc-dica .35s ease; }
+@keyframes oc-dica { from { opacity: 0; transform: translateY(6px); } }
+.card-dica-btn { align-self: flex-start; background: transparent; border: 0; color: var(--text-sub); font: inherit; font-size: 13px; cursor: pointer; padding: 4px 0; }
+.card-dica-btn:hover { color: var(--text-main); }
+
+/* etapas compactas */
+.etapas { list-style: none; display: flex; align-items: center; gap: 0; margin: 10px 0 0; padding: 0; max-width: 340px; }
+.etapa { display: flex; align-items: center; gap: 6px; flex: 1; font-size: 11px; color: var(--text-muted); position: relative; }
+.etapa:not(:last-child)::after { content: ""; flex: 1; height: 2px; margin: 0 6px; background: var(--border-color); border-radius: 2px; }
+.etapa.feita:not(:last-child)::after { background: #22c55e; }
+.etapa-ponto { width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--bg-body); border: 1.5px solid var(--border-color); font-size: 9px; flex-shrink: 0; }
+.etapa.feita .etapa-ponto { background: #22c55e; border-color: #22c55e; color: #06210a; }
+.etapa.feita { color: var(--text-sub); }
+.etapa.atual .etapa-ponto { border-color: #3d8bfd; color: #3d8bfd; box-shadow: 0 0 0 3px rgba(61, 139, 253, .18); animation: oc-pulso-etapa 2s infinite; }
+.etapa.atual { color: var(--text-main); font-weight: 600; }
+@keyframes oc-pulso-etapa { 50% { box-shadow: 0 0 0 6px rgba(61, 139, 253, 0); } }
+.etapa-rotulo { white-space: nowrap; }
+.etapas-cancelada .etapa { color: var(--text-muted); }
+.dash .item-denuncia .etapas i { font-size: 9px; color: inherit; }
+
+/* perto de você */
+.card-perto-topo { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.card-perto h2, .card-atividade h2 { margin: 0; font-size: 17px; }
+.card-perto-topo p { margin: 2px 0 0; font-size: 13px; color: var(--text-sub); }
+.btn-perto { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-main); font: inherit; font-size: 12.5px; cursor: pointer; }
+.mapa-perto { height: 230px; border-radius: 12px; overflow: hidden; background: var(--bg-body); }
+.card-perto-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 13px; color: var(--text-sub); text-decoration: none; }
+.card-perto-link:hover { color: var(--text-main); }
+.voce-aqui span { display: block; width: 18px; height: 18px; border-radius: 50%; background: #3d8bfd; border: 3px solid #fff; box-shadow: 0 0 0 0 rgba(61, 139, 253, .6); animation: oc-radar 1.8s infinite; }
+@keyframes oc-radar { to { box-shadow: 0 0 0 18px rgba(61, 139, 253, 0); } }
+
+/* atividade */
+.atividade { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-direction: column; }
+.atividade li { display: flex; gap: 12px; position: relative; padding-bottom: 14px; }
+.atividade li:not(:last-child)::before { content: ""; position: absolute; left: 15px; top: 32px; bottom: 0; width: 2px; background: var(--border-color); }
+.atividade-icone { width: 32px; height: 32px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--tom) 16%, transparent); color: var(--tom); font-size: 13px; }
+.atividade a { display: flex; flex-direction: column; gap: 2px; text-decoration: none; min-width: 0; }
+.atividade strong { font-size: 13px; font-weight: 500; color: var(--text-main); line-height: 1.4; }
+.atividade small { font-size: 11.5px; color: var(--text-sub); }
+.atividade-vazia { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 30px 10px; text-align: center; color: var(--text-sub); font-size: 13px; }
+.atividade-vazia i { font-size: 26px; }
+
+/* gaveta de notificações */
+.painel-notificacoes.gaveta {
+    position: fixed !important; top: 0; right: 0; bottom: 0; left: auto;
+    width: min(400px, 100vw); max-height: none; height: 100vh;
+    margin: 0; border-radius: 20px 0 0 20px; z-index: 1300;
+    display: flex; flex-direction: column;
+    transform: translateX(105%); transition: transform .3s cubic-bezier(.2, .8, .2, 1);
+    box-shadow: -20px 0 50px rgba(0, 0, 0, .35);
+}
+.painel-notificacoes.gaveta.oculto { display: flex !important; }
+.painel-notificacoes.gaveta.aberta { transform: translateX(0); }
+.painel-notificacoes.gaveta .painel-notificacoes-lista { flex: 1; overflow-y: auto; max-height: none; }
+.painel-notificacoes-topo { display: flex; align-items: center; gap: 10px; }
+.painel-notificacoes-topo strong { flex: 1; }
+.painel-notificacoes-fechar { order: 3; background: transparent; border: 0; color: var(--text-sub); font-size: 18px; cursor: pointer; padding: 4px 8px; }
+.gaveta-fundo { position: fixed; inset: 0; z-index: 1290; background: rgba(0, 0, 0, .45); opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s; }
+.gaveta-fundo.ativo { opacity: 1; visibility: visible; }
+.notificacao-grupo { margin: 14px 16px 6px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
+a.notificacao-item { display: flex; gap: 12px; text-decoration: none; }
+.notificacao-icone { width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--tom) 16%, transparent); color: var(--tom); font-size: 14px; }
+.notificacao-texto { min-width: 0; }
+.notificacao-vazia { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 40px 24px; color: var(--text-sub); }
+.notificacao-vazia span { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; background: var(--bg-body); font-size: 22px; margin-bottom: 4px; }
+.notificacao-vazia strong { color: var(--text-main); }
+.notificacao-vazia p { margin: 0; font-size: 13px; }
+
+/* tour */
+.tour-realce { position: fixed; z-index: 9970; border-radius: 16px; box-shadow: 0 0 0 9999px rgba(8, 12, 20, .62), 0 0 0 3px #22c55e; pointer-events: none; transition: all .3s ease; }
+.tour-balao { position: fixed; z-index: 9971; padding: 16px 18px; border-radius: 14px; background: var(--bg-menu, #252f40); color: var(--text-main, #fff); border: 1px solid var(--border-color); box-shadow: 0 18px 40px rgba(0, 0, 0, .4); transition: top .3s ease, left .3s ease; font-family: Poppins, sans-serif; }
+.tour-balao small { font-size: 11px; color: var(--text-sub); }
+.tour-balao strong { display: block; font-size: 15px; margin: 2px 0 4px; }
+.tour-balao p { margin: 0 0 14px; font-size: 13px; line-height: 1.5; color: var(--text-sub); }
+.tour-acoes { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.tour-acoes span { display: flex; gap: 8px; }
+.tour-acoes button { border: 1px solid var(--border-color); background: transparent; color: var(--text-main); padding: 7px 12px; border-radius: 8px; font: inherit; font-size: 12.5px; cursor: pointer; }
+.tour-acoes button[data-tour="pular"] { border: 0; color: var(--text-sub); padding-left: 0; }
+.tour-acoes button.principal { background: #019B38; border-color: #019B38; color: #fff; font-weight: 600; }
+
+body.tema-claro .card-dica-rotulo { color: #a16207; }
+body.tema-claro .saudacao-icone { color: #b45309; }
+
+@media (max-width: 1000px) {
+    .painel-duplo, .painel-duplo-baixo { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+    .impacto-numeros { grid-template-columns: 1fr 1fr; }
+    .sparkline { width: 30%; opacity: .6; }
+    .etapa-rotulo { display: none; }
+    .etapa.atual .etapa-rotulo { display: inline; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .saudacao-icone i, .spark-linha, .etapa.atual .etapa-ponto, .voce-aqui span { animation: none; stroke-dashoffset: 0; }
+}
+
+/* ---- Cabeçalho do painel no celular (v0.49.6) ----
+   Antes os botões de tour (?) e notificações (sino) ficavam empilhados no meio da tela.
+   Agora: [ + Fazer denúncia ] [ ? ] [ sino ] na mesma linha, todos da mesma altura. */
+@media (max-width: 900px) {
+  .dash header .header-acoes,
+  .header-acoes {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .header-acoes .denunciar {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+    padding: 14px 16px;
+  }
+  .header-acoes > .btn-notificacoes,
+  .header-acoes .notificacoes-wrapper .btn-notificacoes {
+    flex: none;
+    width: 52px;
+    height: 100%;
+    min-height: 48px;
+  }
+  .header-acoes .notificacoes-wrapper {
+    flex: none;
+    display: flex;
+  }
+}
+@media (max-width: 360px) {
+  .header-acoes { gap: 8px; }
+  .header-acoes .denunciar { padding: 12px; font-size: 15px; }
+  .header-acoes > .btn-notificacoes,
+  .header-acoes .notificacoes-wrapper .btn-notificacoes { width: 46px; }
+}

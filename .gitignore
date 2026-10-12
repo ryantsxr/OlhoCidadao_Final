@@ -1,0 +1,26 @@
+app/config.local.php
+/vendor/
+storage/integridade.key
+
+storage/.cpf.key
+storage/backups/
+storage/logs/
+storage/.lock_*
+storage/.totp.key
+storage/*.tmp
+
+storage/*.json
+storage/**/*.json
+storage/uploads/*
+storage/.cpf.key
+storage/.totp.key
+storage/*.key
+storage/backup-mysql/
+app/config.local.php
+# Arquivos privados gerados para phpMyAdmin
+sql/importacao_*.sql
+*importacao*privada*.sql
+
+# A instalação local contém o hash do admin original; NÃO publicar!
+sql/INSTALACAO_LOCAL_PRIVADA.sql
+sql/seed_*.sql

@@ -1,0 +1,293 @@
+/* =========================================================================
+   Base visual v0.49 — carregado em todas as páginas (via _pwa.php)
+   ========================================================================= */
+
+/* ---------- 9. Escala fixa de espaços e cantos ---------- */
+:root {
+    --raio-p: 8px;    /* campos, selos pequenos */
+    --raio-m: 12px;   /* botões, cartões internos */
+    --raio-g: 18px;   /* cartões e painéis */
+    --esp-1: 4px; --esp-2: 8px; --esp-3: 12px; --esp-4: 16px; --esp-5: 24px; --esp-6: 32px;
+    --fonte-titulo: "Sora", "Poppins", system-ui, sans-serif;
+}
+.card, .categoria, .denuncia, .painel-config, .card-impacto, .card-dica, .card-perto, .card-atividade,
+.kanban-coluna, .grafico-card, .resultado-consulta, .usuario-card, .estado-vazio, .vazio-dash { border-radius: var(--raio-g); }
+.item-denuncia, .kanban-cartao, .notificacao-item, .mapa-item, .destaque, .atalhos a { border-radius: var(--raio-m); }
+.denunciar, .btn-salvar, .btn-atualizar-status, .botao-vazio, .btn-apoiar-denuncia, .btn-encaminhar, .btn-perto { border-radius: var(--raio-m); }
+.select-status, .busca-denuncias input, .form-status-admin textarea, .config-item select { border-radius: var(--raio-p); }
+
+/* ---------- 3. Fonte própria nos títulos ---------- */
+h1, h2, .saudacao, .kanban-coluna-topo h2, .sucesso-topo h2, .card-impacto-topo h3,
+.mapa-lista-topo h2, .card-stat h3, .impacto-numeros strong, .telao h1, .telao-num {
+    font-family: var(--fonte-titulo);
+    letter-spacing: -.01em;
+}
+
+/* ---------- 10. Verde só na ação principal ---------- */
+nav a i { color: var(--text-sub); transition: color .2s; }
+nav a:hover i { color: var(--text-main); }
+nav a.ativo i { color: var(--accent); }
+nav a.ativo { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.denuncia .link-acao, .denuncia .link-acao i { color: var(--text-sub); }
+.denuncia .link-acao:hover, .denuncia .link-acao:hover i { color: var(--text-main); }
+.usuario-acoes a, .usuario-acoes a i { color: var(--text-sub); }
+.usuario-acoes a:hover i { color: var(--text-main); }
+
+/* ---------- 4. Vidro translúcido com brilho verde (tema escuro) ---------- */
+body:not(.tema-claro):not(.alto-contraste) :is(.card, .categoria, .denuncia-card, .item-denuncia, .card-impacto, .card-dica, .card-perto, .card-atividade, .painel-config, .kanban-coluna) {
+    background: color-mix(in srgb, var(--bg-card) 72%, transparent);
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06), 0 10px 30px rgba(0, 0, 0, .18);
+}
+body:not(.tema-claro):not(.alto-contraste) .menu {
+    background: color-mix(in srgb, var(--bg-menu) 82%, transparent);
+    backdrop-filter: blur(16px);
+}
+
+/* ---------- 7. Textura sutil de ruído (tema escuro) ---------- */
+body:not(.tema-claro):not(.alto-contraste)::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    pointer-events: none;
+    opacity: .05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- 8. Rolagem, seleção e dicas na cor da marca ---------- */
+::selection { background: rgba(34, 197, 94, .35); color: inherit; }
+* { scrollbar-width: thin; scrollbar-color: rgba(34, 197, 94, .45) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(34, 197, 94, .35); border-radius: 10px; border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover { background: rgba(34, 197, 94, .6); background-clip: padding-box; border: 2px solid transparent; }
+.oc-dica {
+    position: fixed;
+    z-index: 9999;
+    padding: 6px 10px;
+    border-radius: var(--raio-p);
+    background: #0b1020;
+    color: #e7ebf2;
+    border: 1px solid rgba(34, 197, 94, .45);
+    font: 500 12px Poppins, system-ui, sans-serif;
+    pointer-events: none;
+    white-space: nowrap;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .35);
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity .15s, transform .15s;
+}
+.oc-dica.visivel { opacity: 1; transform: none; }
+body.tema-claro .oc-dica { background: #1c2431; color: #fff; }
+
+/* ---------- 11. Transição suave entre páginas ---------- */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: oc-vt-sai .18s ease both; }
+::view-transition-new(root) { animation: oc-vt-entra .25s ease both; }
+@keyframes oc-vt-sai { to { opacity: 0; } }
+@keyframes oc-vt-entra { from { opacity: 0; transform: translateY(6px); } }
+
+/* ---------- 6. Cartões que inclinam em 3D ---------- */
+.oc-3d { transition: transform .2s ease, box-shadow .2s ease; transform-style: preserve-3d; will-change: transform; }
+
+/* ---------- 47. Reações ao toque ---------- */
+.oc-onda { position: absolute; border-radius: 50%; transform: scale(0); background: rgba(255, 255, 255, .35); pointer-events: none; animation: oc-onda .55s ease-out; }
+@keyframes oc-onda { to { transform: scale(2.6); opacity: 0; } }
+.oc-pulso { animation: oc-pulso-btn .6s ease; }
+@keyframes oc-pulso-btn { 30% { transform: scale(1.08); } 60% { transform: scale(.96); } }
+.slider, .slider::before { transition: background-color .3s ease, transform .3s cubic-bezier(.3, 1.5, .5, 1) !important; }
+
+/* ---------- 59. Status com ícone além da cor ---------- */
+span.pendente::before, span.analise::before, span.aguardando::before, span.resolvido::before, span.cancelada::before,
+b.prev-pill::before, .pilula-status.st-pendente::before, .pilula-status.st-analise::before, .pilula-status.st-aguardando::before, .pilula-status.st-resolvido::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 6px;
+    font-size: .9em;
+}
+span.pendente::before { content: "\f017"; }      /* relógio */
+span.analise::before, b.prev-pill::before { content: "\f002"; }  /* lupa */
+span.aguardando::before { content: "\f252"; }    /* ampulheta */
+span.resolvido::before { content: "\f00c"; }     /* visto */
+span.cancelada::before { content: "\f05e"; }     /* proibido */
+.pilula-status.st-pendente::before { content: "\f017"; width: auto; height: auto; background: none; border-radius: 0; }
+.pilula-status.st-analise::before { content: "\f002"; width: auto; height: auto; background: none; border-radius: 0; }
+.pilula-status.st-aguardando::before { content: "\f252"; width: auto; height: auto; background: none; border-radius: 0; }
+.pilula-status.st-resolvido::before { content: "\f00c"; width: auto; height: auto; background: none; border-radius: 0; }
+
+/* Modo para daltônicos: paleta Okabe-Ito (azul, laranja, rosa, verde-azulado) */
+body.modo-daltonico .pendente { background: #B35900 !important; }
+body.modo-daltonico .analise { background: #0060A8 !important; }
+body.modo-daltonico .aguardando { background: #A0457E !important; }
+body.modo-daltonico .resolvido { background: #00785A !important; }
+body.modo-daltonico .pilula-status.st-pendente { color: #E69F00; background: rgba(230, 159, 0, .16); }
+body.modo-daltonico .pilula-status.st-analise { color: #56B4E9; background: rgba(86, 180, 233, .16); }
+body.modo-daltonico .pilula-status.st-aguardando { color: #CC79A7; background: rgba(204, 121, 167, .16); }
+body.modo-daltonico .pilula-status.st-resolvido { color: #2BC79B; background: rgba(0, 158, 115, .16); }
+body.modo-daltonico .denuncia-card.st-pendente { --borda-st: #E69F00; }
+body.modo-daltonico .denuncia-card.st-analise { --borda-st: #0072B2; }
+body.modo-daltonico .denuncia-card.st-aguardando { --borda-st: #CC79A7; }
+body.modo-daltonico .denuncia-card.st-resolvido { --borda-st: #009E73; }
+body.modo-daltonico .col-pendente { --cor: #E69F00; }
+body.modo-daltonico .col-analise { --cor: #56B4E9; }
+body.modo-daltonico .col-aguardando { --cor: #CC79A7; }
+body.modo-daltonico .col-resolvido { --cor: #009E73; }
+
+/* Fonte de leitura fácil (dislexia / baixa visão) */
+body.fonte-leitura, body.fonte-leitura :is(p, span, a, li, button, input, textarea, select, small, label, strong, h1, h2, h3, h4, dd, dt) {
+    font-family: "Atkinson Hyperlegible", "Verdana", sans-serif !important;
+}
+body.fonte-leitura { letter-spacing: .02em; word-spacing: .08em; }
+body.fonte-leitura p, body.fonte-leitura li { line-height: 1.75; }
+body.fonte-leitura .fa-solid, body.fonte-leitura .fa-regular, body.fonte-leitura .fa-brands { font-family: "Font Awesome 6 Free" !important; }
+body.fonte-leitura .fa-brands { font-family: "Font Awesome 6 Brands" !important; }
+
+/* ---------- 20. Menu lateral recolhível ---------- */
+.btn-recolher-menu {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin: -24px auto 18px; padding: 6px 10px;
+    border: 1px solid var(--border-color); border-radius: 999px;
+    background: transparent; color: var(--text-sub);
+    font: inherit; font-size: 12px; cursor: pointer;
+}
+.btn-recolher-menu:hover { color: var(--text-main); }
+@media (min-width: 901px) {
+    body.menu-recolhido .menu { width: 88px; padding: 24px 12px; }
+    body.menu-recolhido .menu .logo { width: 52px; margin-bottom: 30px; }
+    body.menu-recolhido .menu nav a { justify-content: center; padding: 14px 0; }
+    body.menu-recolhido .menu nav a span,
+    body.menu-recolhido .menu .usuario-texto,
+    body.menu-recolhido .btn-recolher-menu span { display: none; }
+    body.menu-recolhido .menu nav a i { font-size: 18px; }
+    body.menu-recolhido .usuario-card { padding: 10px 6px; }
+    body.menu-recolhido .usuario-info { justify-content: center; }
+    body.menu-recolhido .usuario-acoes { flex-direction: column; align-items: center; gap: 10px; }
+    body.menu-recolhido .btn-recolher-menu { margin-top: -14px; }
+    body.menu-recolhido .btn-recolher-menu i { transform: rotate(180deg); }
+    .menu { transition: width .25s ease, padding .25s ease, background .3s ease; }
+}
+@media (max-width: 900px) { .btn-recolher-menu { display: none; } }
+
+/* ---------- 24. Rótulos que sobem + ícone de validação ---------- */
+.campo-flutua { position: relative; display: block; }
+.campo-flutua > label.rotulo-flutua {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: #8a94a6; font-size: 14px; pointer-events: none;
+    transition: top .18s ease, font-size .18s ease, color .18s ease, transform .18s ease;
+    background: transparent; padding: 0 4px; margin: 0;
+}
+.campo-flutua.com-icone > label.rotulo-flutua { left: 40px; }
+.campo-flutua > input::placeholder { color: transparent !important; }
+.campo-flutua.ativo > label.rotulo-flutua { top: 7px; transform: none; font-size: 10.5px; color: #22c55e; }
+.campo-flutua > input { padding-top: 18px !important; padding-bottom: 6px !important; }
+.campo-flutua.valido > input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2322c55e' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px; }
+.campo-flutua.invalido > input { box-shadow: inset 0 0 0 1.5px #ef4444; }
+.campo-flutua.invalido > label.rotulo-flutua { color: #f87171; }
+.campo-flutua:has(.ver-senha).valido > input { background-position: right 44px center; }
+body.tema-claro .campo-flutua.ativo > label.rotulo-flutua { color: #15803d; }
+
+/* ---------- 49. Tela de abertura (PWA instalado) ---------- */
+.oc-splash {
+    position: fixed; inset: 0; z-index: 10001;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+    background: radial-gradient(circle at 50% 40%, #1d3b2a 0%, #181f2c 60%);
+    transition: opacity .45s ease, visibility .45s;
+}
+.oc-splash img { width: 150px; animation: oc-splash-logo 1s cubic-bezier(.2, .9, .3, 1.3) both; }
+.oc-splash span { color: #aeb6c5; font: 500 14px Poppins, sans-serif; animation: oc-splash-txt .6s .5s both; }
+.oc-splash.saindo { opacity: 0; visibility: hidden; }
+@keyframes oc-splash-logo { from { opacity: 0; transform: scale(.6) rotate(-8deg); } }
+@keyframes oc-splash-txt { from { opacity: 0; transform: translateY(8px); } }
+
+/* ---------- 48. Puxar para atualizar ---------- */
+.oc-puxar {
+    position: fixed; top: 0; left: 50%; z-index: 9500;
+    width: 42px; height: 42px; margin-left: -21px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg-menu, #252f40); color: #22c55e;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .35);
+    transform: translateY(-60px); opacity: 0;
+}
+.oc-puxar.pronto i { transform: rotate(180deg); }
+.oc-puxar i { transition: transform .2s; }
+
+/* ---------- 56. Rodapé ---------- */
+.oc-rodape {
+    margin-top: 40px; padding: 20px 0 6px;
+    border-top: 1px solid var(--border-color, rgba(255, 255, 255, .08));
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px;
+    color: var(--text-muted, #8a94a6); font-size: 12.5px;
+}
+.oc-rodape strong { color: var(--text-sub, #aeb6c5); font-weight: 600; }
+.oc-rodape nav { display: flex; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; }
+.oc-rodape nav a { padding: 0; color: var(--text-muted, #8a94a6); text-decoration: none; font-size: 12.5px; display: inline; }
+.oc-rodape nav a:hover { color: var(--text-main, #fff); background: none; }
+.oc-rodape nav a::before { display: none; }
+.oc-rodape-versao { padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border-color, rgba(255, 255, 255, .1)); font-size: 11px; }
+/* v1.0.3 — rodapé fora do painel (detalhe da denúncia, consulta, páginas avulsas) */
+.oc-rodape.oc-rodape-solto { box-sizing: border-box; width: calc(100% - 32px); margin: 8px auto 28px; padding: 18px 0 4px; }
+@media (max-width: 600px) {
+    .oc-rodape.oc-rodape-solto { flex-direction: column; align-items: center; text-align: center; }
+    .oc-rodape.oc-rodape-solto nav { justify-content: center; }
+}
+.pagina-auth .oc-rodape, .pagina-publica .oc-rodape { max-width: 900px; margin: 22px auto 0; padding: 14px 16px; border-top: 0; justify-content: center; text-align: center; }
+
+@media (prefers-reduced-motion: reduce) {
+    .oc-3d { transition: none; }
+    .oc-onda, .oc-pulso, .oc-splash img, .oc-splash span { animation: none; }
+    ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
+
+/* ajustes v0.49 */
+body.pagina-auth { flex-wrap: wrap; align-content: center; }
+body.pagina-auth .oc-rodape { flex-basis: 100%; }
+.denuncia .etapas i { font-size: 9px !important; color: inherit !important; }
+.erro-acoes a i { font-size: 14px !important; color: inherit !important; margin: 0 !important; }
+
+/* Mapa escuro sem chave de API: inverte as cores do mapa comum do OpenStreetMap */
+.leaflet-tile.tiles-escuras,
+.tiles-escuras .leaflet-tile,
+img.tiles-escuras { filter: invert(1) hue-rotate(180deg) brightness(.92) contrast(.88) saturate(.6); }
+.leaflet-container:has(.tiles-escuras) { background: #1b1f27; }
+
+
+/* v1.0.1 — Rodapé mobile legível e VLibras fora do meio do formulário. */
+@media (max-width: 600px) {
+    body.pagina-auth .oc-rodape {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: calc(100% - 24px);
+        max-width: 460px;
+        box-sizing: border-box;
+        margin: 18px auto 0;
+        padding: 16px 8px 12px;
+        gap: 12px;
+        text-align: center;
+        line-height: 1.65;
+        overflow-wrap: break-word;
+    }
+    body.pagina-auth .oc-rodape > span { max-width: 100%; }
+    body.pagina-auth .oc-rodape nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        column-gap: 16px;
+        row-gap: 10px;
+        max-width: 100%;
+    }
+    body.pagina-auth .oc-rodape nav a { line-height: 1.55; }
+    /* O plugin externo posiciona o ícone aproximadamente na metade da tela;
+       no celular isso cobre links/campos. Mantemos o VLibras disponível. */
+    div[vw].enabled div[vw-access-button] {
+        top: auto !important;
+        bottom: calc(12px + env(safe-area-inset-bottom, 0px)) !important;
+        right: 10px !important;
+        left: auto !important;
+        transform: none !important;
+    }
+}

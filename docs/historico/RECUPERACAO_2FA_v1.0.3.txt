@@ -1,0 +1,53 @@
+OLHO CIDADAO - RECUPERACAO SEGURA DO 2FA PERDIDO
+=================================================
+
+QUANDO USAR:
+- Google Authenticator ainda gera numeros, mas storage/.totp.key original foi perdida;
+- Nenhum dos 8 codigos de recuperacao esta disponivel;
+- Voce e o administrador e sabe a senha atual da conta.
+
+Este procedimento NAO recupera a chave perdida. Ele REMOVE a configuracao 2FA
+ANTIGA APENAS da conta administrativa confirmada, incrementa auth_epoch para
+invalidar sessoes antigas e registra a operacao na auditoria.
+
+PREPARACAO:
+1. Faça backup de TODO o projeto e do banco de dados MySQL. Guarde o backup fora da pasta publica.
+2. Confirme se essa chave nao esta em backup anterior, OneDrive, outra unidade ou dentro de ZIP antigo.
+3. Com Apache/MySQL funcionando, extraia os DOIS arquivos na pasta
+   C:\xampp\htdocs\OlhoCidadao_MVC\ (na raiz, ao lado de app/, public/, storage/).
+4. Abra Windows PowerShell como administrador (se necessario).
+5. Execute:
+   cd "C:\xampp\htdocs\OlhoCidadao_MVC"
+   powershell -NoProfile -ExecutionPolicy Bypass -File ".\RECUPERAR_2FA.ps1"
+6. Digite e-mail do admin, senha e a confirmacao RECUPERAR 2FA.
+7. Volte ao site, entre usando email/senha. O sistema devera exigir reativacao
+   do 2FA; escaneie o novo QR Code e gere 8 NOVOS codigos de recuperacao.
+8. Confirme que o login com novo codigo funciona.
+9. APAGUE os dois arquivos de recuperacao da pasta do projeto, inclusive copias
+   publicas. Guarde os NOVOS codigos fora do chat e fora do servidor.
+
+SEGURANCA:
+- O arquivo PHP so executa pela linha de comando (CLI), nao pela web.
+- Exige a senha atual de um ADMIN ativo; senha nao e passada por argumento.
+- Usa a conexao/driver definido na app/config.local.php da propria instalacao.
+- NAO apaga usuarios, denuncias, CPFs, banco ou a chave .cpf.key.
+- NAO substitui storage/.totp.key automaticamente. Mantenha a pasta storage.
+- A chave perdida, se encontrada depois, nao sera usada para validar 2FA novo.
+- Em caso de falha, confira os logs do PHP; nao divulgue credenciais.
+
+IMPORTANTE:
+Este recurso foi testado em instalacao isolada JSON, mas ainda necessita de
+validacao no MySQL e nas credenciais reais da sua maquina. Nunca execute sem backup.
+
+ATUALIZACAO 11/10 - WINDOWS POWERSHELL 5.1
+----------------------------------------
+Corrigido o erro na linha 38: a propriedade StandardInputEncoding nao existe
+na versao Windows PowerShell 5.1. A entrada para o PHP agora usa UTF-8
+sem BOM pela stream redirecionada. Senhas nao sao exibidas nem passadas
+na linha de comando.
+
+Se voce instalou a ferramenta anterior e viu o erro, substitua
+RECUPERAR_2FA.ps1 pelo arquivo deste ZIP. O arquivo PHP e o mesmo da
+versao anterior. Nao envie a senha ao chat.
+
+Para restaurar o acesso, faca o backup primeiro.

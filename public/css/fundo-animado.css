@@ -1,0 +1,106 @@
+/* =========================================================
+   FUNDO ANIMADO — Gradiente "blobs" em movimento
+   Aplicado em todas as telas do sistema.
+   - Só anima `transform` (leve, não trava em celular)
+   - Some completamente em modo Alto Contraste
+   - Congela se o usuário pedir "menos movimento" no SO
+   ========================================================= */
+
+html {
+    background: #181F2C;
+}
+
+body {
+    background: transparent;
+}
+
+body.tema-claro {
+    background: transparent;
+}
+
+html:has(body.tema-claro) {
+    background: #F4F7F6;
+}
+
+.fundo-animado {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.fundo-animado .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.35;
+    will-change: transform;
+}
+
+.fundo-animado .blob-1 {
+    width: 55vmax;
+    height: 55vmax;
+    top: -18vmax;
+    left: -12vmax;
+    background: radial-gradient(circle at 30% 30%, #019B38, transparent 70%);
+    animation: blob-flutuar-1 26s ease-in-out infinite;
+}
+
+.fundo-animado .blob-2 {
+    width: 48vmax;
+    height: 48vmax;
+    top: 30%;
+    right: -16vmax;
+    background: radial-gradient(circle at 60% 40%, #2563EB, transparent 70%);
+    animation: blob-flutuar-2 32s ease-in-out infinite;
+}
+
+.fundo-animado .blob-3 {
+    width: 42vmax;
+    height: 42vmax;
+    bottom: -16vmax;
+    left: 18%;
+    background: radial-gradient(circle at 50% 50%, #8B5CF6, transparent 70%);
+    animation: blob-flutuar-3 29s ease-in-out infinite;
+}
+
+/* Tema claro: blobs mais suaves, opacidade menor */
+body.tema-claro .fundo-animado .blob {
+    opacity: 0.22;
+}
+
+@keyframes blob-flutuar-1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%      { transform: translate(8vmax, 6vmax) scale(1.12); }
+    66%      { transform: translate(-4vmax, 10vmax) scale(0.95); }
+}
+
+@keyframes blob-flutuar-2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%      { transform: translate(-10vmax, 8vmax) scale(0.9); }
+    66%      { transform: translate(-6vmax, -8vmax) scale(1.1); }
+}
+
+@keyframes blob-flutuar-3 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%      { transform: translate(6vmax, -10vmax) scale(1.08); }
+    66%      { transform: translate(10vmax, 4vmax) scale(0.92); }
+}
+
+/* Respeita usuários que pedem menos movimento no sistema operacional */
+@media (prefers-reduced-motion: reduce) {
+    .fundo-animado .blob {
+        animation: none;
+    }
+}
+
+/* Alto contraste precisa de fundo neutro e sem distrações visuais */
+body.alto-contraste .fundo-animado {
+    display: none;
+}
+
+/* Celulares: redução de processamento do desfoque sem remover o fundo da marca. */
+@media (max-width: 600px) {
+    .fundo-animado .blob { filter: blur(42px); }
+}

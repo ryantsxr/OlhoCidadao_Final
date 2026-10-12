@@ -1,0 +1,30 @@
+/* Etapa 5: melhorias progressivas sem alterar o tema visual padrão. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 3px solid #58bfff !important;
+    outline-offset: 3px;
+}
+/* Modo alto contraste mantém o foco sempre evidente. */
+body.alto-contraste :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 3px solid currentColor !important;
+    outline-offset: 4px;
+}
+.oc-pular-conteudo {
+    position: fixed; left: 12px; top: 12px; z-index: 2147483000;
+    padding: 12px 18px; border-radius: 12px;
+    background: #fff; color: #101827 !important; border: 3px solid #16a34a;
+    text-decoration: none; font-weight: 700;
+    transform: translateY(-160%); transition: transform .15s ease;
+}
+.oc-pular-conteudo:focus { transform: translateY(0); }
+/* Evita que elementos vazem da viewport sem ocultar a rolagem vertical. */
+@media (max-width: 600px) {
+    .conteudo, main, .caixa-denuncia, .painel-config, .card { min-width: 0; }
+    .oc-toasts { max-width: calc(100vw - 24px); }
+    :where(button, input, select, textarea) { touch-action: manipulation; }
+}
+/* Menos movimento: animação nunca é requisito para perceber o conteúdo. */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within { scroll-behavior: auto !important; }
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+    .oc-pular-conteudo { transition: none; }
+}

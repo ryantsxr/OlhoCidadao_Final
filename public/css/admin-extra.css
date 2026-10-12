@@ -1,0 +1,127 @@
+/* Admin (v0.49): comparação mensal, calendário, telão, busca rápida e ações em massa */
+.btn-telao { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: var(--raio-m, 12px); border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-main); text-decoration: none; font-size: 13.5px; font-weight: 600; }
+.btn-telao:hover { border-color: #22c55e; }
+
+/* 43. ▲ ▼ vs mês passado */
+.cards-comparacao { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; margin-bottom: 18px; }
+.comparacao { display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+.comparacao small { font-weight: 400; opacity: .8; }
+.comparacao.bom { background: rgba(34, 197, 94, .15); color: #22c55e; }
+.comparacao.ruim { background: rgba(239, 68, 68, .15); color: #f87171; }
+.comparacao.neutro { background: var(--bg-body); color: var(--text-sub); font-weight: 500; }
+body.tema-claro .comparacao.bom { color: #15803d; }
+body.tema-claro .comparacao.ruim { color: #b91c1c; }
+
+/* 44. calendário de atividade */
+.sub-calendario { font-weight: 400; font-size: 12px; color: var(--text-sub); margin-left: 8px; }
+.calendario-wrap { display: flex; gap: 8px; overflow-x: auto; padding: 22px 0 4px; }
+.calendario-dias-semana { display: grid; grid-template-rows: repeat(7, 14px); gap: 3px; font-size: 10px; color: var(--text-muted); line-height: 14px; }
+.calendario { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 14px); grid-auto-columns: 14px; gap: 3px; position: relative; }
+.calendario .dia { width: 14px; height: 14px; border-radius: 3px; position: relative; }
+.calendario .dia[data-mes]::before { content: attr(data-mes); position: absolute; top: -18px; left: 0; font-size: 10px; color: var(--text-muted); }
+.dia.n0 { background: var(--bg-body); outline: 1px solid var(--border-color); outline-offset: -1px; }
+.dia.n1 { background: rgba(34, 197, 94, .3); }
+.dia.n2 { background: rgba(34, 197, 94, .5); }
+.dia.n3 { background: rgba(34, 197, 94, .75); }
+.dia.n4 { background: #22c55e; }
+.calendario .dia:hover { outline: 2px solid var(--text-main); outline-offset: 0; }
+.calendario-legenda { display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 10px; font-size: 11px; color: var(--text-sub); }
+.calendario-legenda i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.calendario-legenda span { margin: 0 4px; }
+
+/* 41. busca rápida */
+.btn-busca-rapida { display: flex; align-items: center; gap: 10px; width: 100%; margin: 0 0 14px; padding: 10px 12px; border-radius: var(--raio-m, 12px); border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-sub); font: inherit; font-size: 13px; cursor: pointer; }
+.btn-busca-rapida span { flex: 1; text-align: left; }
+.btn-busca-rapida:hover { color: var(--text-main); border-color: var(--text-sub); }
+kbd { display: inline-block; padding: 1px 6px; border-radius: 5px; border: 1px solid var(--border-color); border-bottom-width: 2px; background: var(--bg-card); font: 600 10.5px ui-monospace, Menlo, Consolas, monospace; color: var(--text-sub); }
+body.menu-recolhido .btn-busca-rapida { justify-content: center; padding: 10px 0; }
+body.menu-recolhido .btn-busca-rapida span, body.menu-recolhido .btn-busca-rapida kbd { display: none; }
+@media (max-width: 900px) { .btn-busca-rapida kbd { display: none; } }
+.paleta-fundo { position: fixed; inset: 0; z-index: 9990; display: flex; justify-content: center; align-items: flex-start; padding: 12vh 16px 16px; background: rgba(5, 8, 15, .55); backdrop-filter: blur(4px); }
+.paleta-fundo[hidden] { display: none; }
+.paleta { width: min(620px, 100%); border-radius: 16px; overflow: hidden; background: var(--bg-menu, #252f40); border: 1px solid var(--border-color); box-shadow: 0 30px 70px rgba(0, 0, 0, .5); animation: oc-toast-entrar .2s ease; font-family: Poppins, sans-serif; }
+.paleta-campo { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--border-color); color: var(--text-sub); }
+.paleta-campo input { flex: 1; border: 0; outline: 0; background: transparent; color: var(--text-main); font: inherit; font-size: 15px; }
+.paleta-lista { list-style: none; margin: 0; padding: 6px; max-height: 50vh; overflow-y: auto; }
+.paleta-lista li[data-i] { display: flex; align-items: center; gap: 12px; padding: 9px 10px; border-radius: 10px; cursor: pointer; }
+.paleta-lista li.ativo { background: color-mix(in srgb, #22c55e 14%, transparent); }
+.paleta-grupo { padding: 10px 10px 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted); }
+.paleta-ic { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; background: var(--bg-body); color: var(--text-sub); flex-shrink: 0; }
+.paleta-lista li.ativo .paleta-ic { color: #22c55e; }
+.paleta-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.paleta-txt strong { font-size: 13.5px; font-weight: 500; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.paleta-txt small { font-size: 11.5px; color: var(--text-sub); }
+.paleta-enter { color: var(--text-muted); opacity: 0; font-size: 12px; }
+.paleta-lista li.ativo .paleta-enter { opacity: 1; }
+.paleta-vazio { padding: 26px; text-align: center; color: var(--text-sub); font-size: 13.5px; }
+.paleta-rodape { display: flex; gap: 16px; flex-wrap: wrap; padding: 10px 16px; border-top: 1px solid var(--border-color); font-size: 11.5px; color: var(--text-muted); }
+
+/* 42. ações em massa */
+.selecao-massa { position: absolute; top: -6px; left: -6px; z-index: 2; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 7px; background: var(--bg-menu); border: 1px solid var(--border-color); cursor: pointer; opacity: 0; transition: opacity .15s; }
+.denuncia-card:hover .selecao-massa, .selecao-massa:has(input:checked), .selecao-massa:focus-within { opacity: 1; }
+.selecao-massa input { width: 15px; height: 15px; margin: 0; accent-color: #22c55e; cursor: pointer; }
+.denuncia-card .icone-cat { position: relative; }
+.denuncia-card.selecionada { outline: 2px solid #22c55e; outline-offset: 2px; }
+@media (hover: none) { .selecao-massa { opacity: 1; } }
+.barra-massa {
+    position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 950;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center;
+    width: max-content; max-width: calc(100vw - 32px);
+    padding: 10px 12px 10px 18px; border-radius: 16px;
+    background: #0b1020; color: #e7ebf2; border: 1px solid rgba(34, 197, 94, .45);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, .45);
+    animation: oc-barra-subir .25s cubic-bezier(.2, .9, .3, 1.2);
+}
+.barra-massa[hidden] { display: none; }
+@keyframes oc-barra-subir { from { opacity: 0; transform: translate(-50%, 20px); } }
+.barra-massa-qtd strong { color: #4ade80; font-size: 16px; }
+.barra-massa-todas { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: #aeb6c5; cursor: pointer; }
+.barra-massa select { max-width: 280px; padding: 8px 10px; border-radius: 10px; border: 1px solid #3a4557; background: #1c2431; color: #e7ebf2; font: inherit; font-size: 13px; }
+.barra-massa-aplicar { padding: 9px 14px; border-radius: 10px; border: 0; background: #019B38; color: #fff; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.barra-massa-limpar { width: 34px; height: 34px; border-radius: 10px; border: 1px solid #3a4557; background: transparent; color: #aeb6c5; cursor: pointer; }
+@media (max-width: 900px) { .barra-massa { bottom: calc(100px + env(safe-area-inset-bottom)); } }
+
+/* 45. modo telão */
+body.pagina-telao { overflow: hidden; }
+.telao { height: 100vh; display: flex; flex-direction: column; gap: 2.2vh; padding: 3vh 3vw; color: #fff; position: relative; z-index: 1; box-sizing: border-box; }
+.telao-topo { display: flex; align-items: center; gap: 24px; }
+.telao-marca { display: flex; align-items: center; gap: 18px; flex: 1; }
+.telao-marca img { width: 8vh; }
+.telao-marca h1 { margin: 0; font-size: 4vh; }
+.telao-marca h1 span { font-size: 1.6vh; vertical-align: middle; margin-left: 10px; padding: 4px 10px; border-radius: 999px; background: #ef4444; text-transform: uppercase; letter-spacing: .1em; animation: oc-ao-vivo 1.6s infinite; }
+@keyframes oc-ao-vivo { 50% { opacity: .55; } }
+.telao-marca p { margin: 2px 0 0; color: #aeb6c5; font-size: 1.8vh; }
+.telao-relogio { text-align: right; }
+.telao-relogio strong { display: block; font-size: 5vh; font-family: var(--fonte-titulo); line-height: 1; }
+.telao-relogio small { color: #aeb6c5; font-size: 1.7vh; text-transform: capitalize; }
+.telao-botoes { display: flex; gap: 8px; }
+.telao-botoes button, .telao-botoes a { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, .12); background: rgba(255, 255, 255, .05); color: #fff; cursor: pointer; text-decoration: none; }
+.telao-numeros { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.4vw; }
+.telao-card { padding: 2.6vh 1.4vw; border-radius: 22px; background: rgba(37, 47, 64, .72); border: 1px solid rgba(255, 255, 255, .08); backdrop-filter: blur(12px); display: flex; flex-direction: column; gap: .6vh; position: relative; overflow: hidden; }
+.telao-card::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--tom); }
+.telao-card > i { color: var(--tom); font-size: 2.6vh; }
+.telao-num { font-family: var(--fonte-titulo); font-size: 7vh; font-weight: 700; line-height: 1.05; }
+.telao-num-texto { font-size: 3.6vh; line-height: 1.3; min-height: 7.3vh; display: flex; align-items: center; }
+.telao-num .mudou, .telao-num.mudou { color: #4ade80; transition: color .3s; }
+.telao-card small { color: #aeb6c5; font-size: 1.7vh; }
+.telao-baixo { flex: 1; display: grid; grid-template-columns: 1fr 1.3fr; gap: 1.4vw; min-height: 0; }
+.telao-painel { padding: 2.4vh 1.6vw; border-radius: 22px; background: rgba(37, 47, 64, .72); border: 1px solid rgba(255, 255, 255, .08); min-height: 0; overflow: hidden; }
+.telao-painel h2 { margin: 0 0 2vh; font-size: 2.4vh; }
+.telao-barras { display: flex; flex-direction: column; gap: 2.2vh; }
+.telao-barra { display: grid; grid-template-columns: 9vw 1fr 4vw; align-items: center; gap: 12px; font-size: 2vh; }
+.telao-barra i { color: var(--tom); }
+.telao-barra > div { height: 2.4vh; border-radius: 99px; background: rgba(255, 255, 255, .07); overflow: hidden; }
+.telao-barra b { display: block; height: 100%; border-radius: inherit; background: var(--tom); transition: width .8s ease; }
+.telao-barra strong { text-align: right; font-size: 2.6vh; }
+.telao-ultimas { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1.2vh; }
+.telao-ultimas li { display: flex; align-items: center; gap: 14px; padding: 1.1vh 1vw; border-radius: 14px; background: rgba(255, 255, 255, .04); animation: oc-toast-entrar .4s ease; }
+.telao-ic { width: 4.4vh; height: 4.4vh; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: color-mix(in srgb, var(--tom) 18%, transparent); color: var(--tom); font-size: 2vh; flex-shrink: 0; }
+.telao-ultimas div { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.telao-ultimas strong { font-size: 1.9vh; }
+.telao-ultimas small { color: #aeb6c5; font-size: 1.5vh; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.telao-ultimas em { font-style: normal; text-align: right; font-size: 1.6vh; color: #e7ebf2; }
+.telao-rodape { display: flex; align-items: center; gap: 10px; color: #8a94a6; font-size: 1.5vh; }
+.telao-ao-vivo { width: 10px; height: 10px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 0 rgba(34, 197, 94, .6); animation: oc-radar 1.8s infinite; }
+@keyframes oc-radar { to { box-shadow: 0 0 0 12px rgba(34, 197, 94, 0); } }
+body.pagina-telao::after { display: none; }
+@media (max-width: 1000px) { body.pagina-telao { overflow: auto; } .telao { height: auto; } .telao-numeros { grid-template-columns: repeat(2, 1fr); } .telao-baixo { grid-template-columns: 1fr; } .telao-barra { grid-template-columns: 30vw 1fr 10vw; } }
