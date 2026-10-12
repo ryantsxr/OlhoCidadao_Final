@@ -3,7 +3,7 @@
  * Só cacheia recursos da pasta pública, nunca respostas JSON ou anexos de cidadãos.
  */
 const ESCOPO = new URL(self.registration.scope).pathname;
-const VERSAO = `oc-estaticos-v103-${ESCOPO.replace(/[^a-z0-9]/gi, '-')}`;
+const VERSAO = `oc-estaticos-v106-${ESCOPO.replace(/[^a-z0-9]/gi, '-')}`;
 const ESTATICOS = [
     'offline.html', 'js/offline.js', 'img/icon-192.png', 'img/logo.png',
     'css/dashboard.css', 'css/responsivo.css', 'css/acessibilidade.css'

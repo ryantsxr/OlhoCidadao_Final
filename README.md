@@ -1,4 +1,4 @@
-# 👁️ Olho Cidadão — v1.0.5
+# 👁️ Olho Cidadão — v1.0.6
 
 **Tecnologia a serviço da cidadania.** Sistema web em PHP (MVC) para o morador registrar e acompanhar problemas da cidade — poste apagado, buraco, lixo, esgoto — com protocolo, mapa, fotos, histórico e painel para a administração.
 
@@ -29,6 +29,7 @@
 - Denúncia anônima para os outros moradores, consulta pública por protocolo e relatório em PDF.
 - Mascote **Olhinho** (3D) com assistente de dúvidas, ditado por voz, Mural de vitórias (antes/depois) e painel de transparência.
 - Acessibilidade: tema claro/escuro, alto contraste, modo para daltonismo, fonte para leitura, VLibras e navegação por teclado.
+- Sistema inteiro em **português, inglês ou espanhol** (Configurações › Idioma).
 - App instalável no celular (PWA).
 
 **Para a administração**
@@ -94,5 +95,5 @@ Tudo tem um valor padrão seguro. Para colocar no ar, preencha: `APP_URL` (com `
 - [docs/SEGURANCA.md](docs/SEGURANCA.md) — todas as proteções, explicadas
 - [docs/DIAGRAMAS.md](docs/DIAGRAMAS.md) — casos de uso, MVC, banco de dados e fluxo da denúncia
 - [docs/ROTEIRO_APRESENTACAO.md](docs/ROTEIRO_APRESENTACAO.md) — roteiro de 5 minutos para a banca
-- [docs/ALTERACOES_v1.0.5.md](docs/ALTERACOES_v1.0.5.md), [v1.0.4](docs/ALTERACOES_v1.0.4.md) e [v1.0.3](docs/ALTERACOES_v1.0.3.md) — o que mudou
+- [docs/ALTERACOES_v1.0.6.md](docs/ALTERACOES_v1.0.6.md), [v1.0.5](docs/ALTERACOES_v1.0.5.md), [v1.0.4](docs/ALTERACOES_v1.0.4.md) e [v1.0.3](docs/ALTERACOES_v1.0.3.md) — o que mudou
 - `docs/historico/` — anotações das versões anteriores

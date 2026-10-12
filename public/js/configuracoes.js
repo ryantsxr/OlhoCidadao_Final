@@ -221,7 +221,10 @@ function aplicarTamanhoFonte(tamanho) {
  */
 function aplicarIdioma(siglaIdioma) {
     const t = traducoes[siglaIdioma];
-    if (!t) return;
+    if (!t) {
+        if (window.ocI18n) window.ocI18n.aplicar(siglaIdioma);
+        return;
+    }
 
     // Atualiza o texto interno de qualquer elemento marcado com data-i18n
     document.querySelectorAll('[data-i18n]').forEach((el) => {
@@ -263,6 +266,9 @@ function aplicarIdioma(siglaIdioma) {
 
     // Marca o idioma atual no <html> (útil para CSS/acessibilidade)
     document.documentElement.setAttribute('lang', siglaIdioma);
+
+    // Traduz o restante da página (textos sem data-i18n, avisos, gráficos...).
+    if (window.ocI18n) window.ocI18n.aplicar(siglaIdioma);
 }
 
 function obterConfiguracaoFormulario() {

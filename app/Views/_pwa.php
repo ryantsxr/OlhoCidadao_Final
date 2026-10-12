@@ -55,6 +55,8 @@ if (!empty($_SESSION['user_id'])) {
 <link rel="stylesheet" href="<?= BASE_URL ?>/css/interacoes.css?v=1.0.3">
 <link rel="stylesheet" href="<?= BASE_URL ?>/css/daltonismo.css?v=0.52.9">
 <link rel="stylesheet" href="<?= BASE_URL ?>/css/acessibilidade.css?v=0.52.9">
+<script nonce="<?= CSP_NONCE ?>" src="<?= BASE_URL ?>/js/i18n-dicionario.js?v=1.0.6" defer></script>
+<script nonce="<?= CSP_NONCE ?>" src="<?= BASE_URL ?>/js/i18n.js?v=1.0.6" defer></script>
 <script nonce="<?= CSP_NONCE ?>" src="<?= BASE_URL ?>/js/acabamento.js?v=0.52.9" defer></script>
 <script nonce="<?= CSP_NONCE ?>" src="<?= BASE_URL ?>/js/interacoes.js?v=1.0.3" defer></script>
 <?php if (($_ocUsuarioAtual['role'] ?? '') === 'admin'): ?>

@@ -182,6 +182,52 @@ class Assistente {
         ],
     ];
 
+    /**
+     * Palavras-chave em inglês e espanhol (sem acento, minúsculas), para o
+     * Olhinho entender quem usa o sistema nesses idiomas. A resposta sai em
+     * português e a tela traduz (public/js/i18n.js).
+     */
+    private const CHAVES_OUTROS_IDIOMAS = [
+        'saudacao' => ['hi', 'hello', 'good morning', 'good afternoon', 'good evening', 'hola', 'buenos dias', 'buenas tardes', 'buenas noches'],
+        'quem_e' => ['who are you', 'your name', 'are you a robot', 'what are you', 'quien eres', 'como te llamas', 'eres un robot', 'que eres'],
+        'como_denunciar' => ['how to report', 'how do i report', 'file a report', 'new report', 'make a report', 'how does it work', 'step by step', 'como hago una denuncia', 'hacer una denuncia', 'nueva denuncia', 'como funciona', 'paso a paso', 'quiero denunciar'],
+        'categoria' => ['which category', 'what category', 'categories', 'que categoria', 'cual categoria', 'categorias'],
+        'foto' => ['photo', 'picture', 'image', 'attach', 'imagen', 'adjuntar', 'camara'],
+        'localizacao' => ['location', 'address', 'map', 'where is', 'ubicacion', 'direccion', 'donde queda'],
+        'voz' => ['voice', 'microphone', 'speak', 'dictate', 'voz', 'microfono', 'hablar', 'dictar'],
+        'anonima' => ['anonymous', 'anonymously', 'anonimo', 'anonima', 'anonimamente', 'sin mi nombre', 'without my name'],
+        'protocolo' => ['protocol', 'tracking number', 'look up', 'numero de protocolo'],
+        'status_pendente' => ['pending', 'pendiente'],
+        'status_analise' => ['under review', 'en analisis'],
+        'status_aguardando' => ['awaiting confirmation', 'esperando confirmacion'],
+        'status_resolvido' => ['resolved', 'resuelto', 'resuelta'],
+        'status_cancelada' => ['cancelled', 'canceled'],
+        'status' => ['status', 'statuses', 'estado', 'estados', 'what does each status mean'],
+        'prazo' => ['how long', 'deadline', 'how many days', 'cuanto tarda', 'cuanto tiempo', 'plazo', 'cuantos dias'],
+        'cancelar' => ['cancel', 'give up', 'cancelar mi denuncia', 'desistir'],
+        'editar' => ['edit', 'change my report', 'fix my report', 'editar', 'corregir', 'modificar'],
+        'reabrir' => ['reopen', 'not resolved', 'not fixed', 'came back', 'reabrir', 'no se resolvio', 'volvio'],
+        'apoiar' => ['support', 'same problem', 'me too', 'apoyar', 'mismo problema', 'yo tambien'],
+        'notificacoes' => ['notification', 'notifications', 'notified', 'notificacion', 'notificaciones', 'aviso', 'avisos'],
+        'senha' => ['password', 'forgot', 'reset password', 'contrasena', 'olvide'],
+        'privacidade' => ['privacy', 'my data', 'delete my account', 'privacidad', 'mis datos', 'borrar mi cuenta', 'eliminar mi cuenta'],
+        'mapa_publico' => ['public map', 'heat map', 'mapa de calor'],
+        'vitorias' => ['does it work', 'is it worth', 'victory', 'victories', 'sirve de algo', 'victorias'],
+        'quem_resolve' => ['who solves', 'who fixes', 'which department', 'quien resuelve', 'que sector'],
+        'emergencia' => ['emergency', 'danger', 'fire', 'accident', 'emergencia', 'peligro', 'incendio', 'accidente'],
+        'app' => ['install', 'download app', 'mobile app', 'instalar', 'descargar', 'aplicacion'],
+        'acessibilidade' => ['accessibility', 'dark mode', 'light mode', 'font size', 'language', 'accesibilidad', 'modo oscuro', 'tamano de letra', 'idioma'],
+        'agradecimento' => ['thanks', 'thank you', 'gracias', 'muchas gracias'],
+        'ajuda' => ['help', 'what can you do', 'ayuda', 'que puedes hacer'],
+    ];
+
+    private const PISTAS_OUTROS_IDIOMAS = [
+        'iluminacao' => ['streetlight', 'street light', 'lamp', 'light', 'dark', 'farola', 'luz', 'oscuro', 'apagado', 'lampara'],
+        'sinalizacao' => ['traffic light', 'sign', 'crosswalk', 'traffic', 'speed bump', 'senal', 'semaforo', 'paso de peatones', 'transito', 'trafico'],
+        'lixo' => ['garbage', 'trash', 'rubbish', 'litter', 'smell', 'basura', 'escombros', 'suciedad', 'mal olor', 'recoleccion'],
+        'outros' => ['pothole', 'sewage', 'sewer', 'flood', 'tree', 'branch', 'sidewalk', 'leak', 'pipe', 'bache', 'alcantarilla', 'inundacion', 'arbol', 'rama', 'acera', 'vereda', 'fuga', 'tuberia'],
+    ];
+
     /** Palavras que indicam cada categoria quando a pessoa descreve um problema. */
     private const PISTAS_CATEGORIA = [
         'iluminacao' => ['poste', 'lampada', 'luz', 'escuro', 'apagado', 'iluminacao', 'luminaria'],
@@ -224,7 +270,7 @@ class Assistente {
         }
 
         // 2) Minhas denúncias (logado).
-        if (preg_match('/\b(minhas denuncias|minha denuncia|quantas denuncias|meus protocolos|como estao minhas|status das minhas)\b/', $norm)) {
+        if (preg_match('/\b(minhas denuncias|minha denuncia|quantas denuncias|meus protocolos|como estao minhas|status das minhas|my reports|my report|mis denuncias|mi denuncia)\b/', $norm)) {
             return self::resumoDoUsuario($userId);
         }
 
@@ -233,7 +279,7 @@ class Assistente {
         $melhorPontos = 0;
         foreach (self::RESPOSTAS as $chave => $r) {
             $pontos = 0;
-            foreach ($r['chaves'] as $palavra) {
+            foreach (array_merge($r['chaves'], self::CHAVES_OUTROS_IDIOMAS[$chave] ?? []) as $palavra) {
                 if (self::contem($norm, $palavra)) {
                     // Trechos maiores valem mais ("em analise" > "analise").
                     $pontos += 1 + substr_count($palavra, ' ') * 1.5 + mb_strlen($palavra) / 20;
@@ -316,7 +362,7 @@ class Assistente {
         $max = 0;
         foreach (self::PISTAS_CATEGORIA as $cat => $pistas) {
             $n = 0;
-            foreach ($pistas as $p) {
+            foreach (array_merge($pistas, self::PISTAS_OUTROS_IDIOMAS[$cat] ?? []) as $p) {
                 if (self::contem($norm, $p)) $n++;
             }
             if ($n > $max) { $max = $n; $melhor = $cat; }

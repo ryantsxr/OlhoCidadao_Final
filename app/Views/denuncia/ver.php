@@ -258,7 +258,7 @@ $totalApoios = count($denuncia['apoios'] ?? []);
     </main>
 
     <script nonce="<?= CSP_NONCE ?>" src="<?= BASE_URL ?>/js/fundo-animado.js?v=0.52.9"></script>
-    <script nonce="<?= CSP_NONCE ?>" src="<?= BASE_URL ?>/js/configuracoes.js?v=0.52.9"></script>
+    <script nonce="<?= CSP_NONCE ?>" src="<?= BASE_URL ?>/js/configuracoes.js?v=1.0.6"></script>
     <script nonce="<?= CSP_NONCE ?>" src="<?= BASE_URL ?>/js/detalhe.js?v=0.52.9"></script>
 <?php if (!empty($error)): ?>
 <script nonce="<?= CSP_NONCE ?>">document.addEventListener('DOMContentLoaded', () => mostrarToast(<?= json_encode($error) ?>, 'erro'));</script>

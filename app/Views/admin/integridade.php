@@ -79,7 +79,7 @@ $tudoOk = empty($problemas);
     </main>
 </div>
 <script nonce="<?= CSP_NONCE ?>" src="<?= BASE_URL ?>/js/fundo-animado.js?v=0.52.9"></script>
-<script nonce="<?= CSP_NONCE ?>" src="<?= BASE_URL ?>/js/configuracoes.js?v=0.52.9"></script>
+<script nonce="<?= CSP_NONCE ?>" src="<?= BASE_URL ?>/js/configuracoes.js?v=1.0.6"></script>
 <script nonce="<?= CSP_NONCE ?>" src="<?= BASE_URL ?>/js/menu-mobile.js?v=0.52.9"></script>
 <?php require __DIR__ . '/../_vlibras.php'; ?>
 <?php require __DIR__ . '/../_barra-inferior.php'; ?>

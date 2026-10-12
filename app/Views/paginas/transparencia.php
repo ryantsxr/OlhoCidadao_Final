@@ -13,7 +13,9 @@ body{background:#111827;color:#e5e7eb;font-family:system-ui,Arial,sans-serif}
 .transparencia table{width:100%;border-collapse:collapse;background:#1f2937;border-radius:12px;overflow:hidden}
 .transparencia td,.transparencia th{text-align:left;padding:12px 16px;border-bottom:1px solid #374151}
 .transparencia .bloco{margin:26px 0}
-</style></head><body>
+</style>
+<script nonce="<?= CSP_NONCE ?>" src="<?= BASE_URL ?>/js/i18n-dicionario.js?v=1.0.6" defer></script><script nonce="<?= CSP_NONCE ?>" src="<?= BASE_URL ?>/js/i18n.js?v=1.0.6" defer></script>
+</head><body>
 <main class="transparencia">
 <a href="<?= BASE_URL ?>/?rota=mapa">← Voltar ao mapa</a>
 <h1>Transparência do Olho Cidadão</h1><p>Dados gerais de ocorrências registradas, sem identificação de cidadãos e sem endereços específicos.</p>

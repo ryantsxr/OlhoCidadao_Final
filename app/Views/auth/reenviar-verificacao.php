@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Confirmar e-mail — Olho Cidadão</title><link rel="stylesheet" href="<?= BASE_URL ?>/css/login.css?v=1.0.1"></head>
+<title>Confirmar e-mail — Olho Cidadão</title><link rel="stylesheet" href="<?= BASE_URL ?>/css/login.css?v=1.0.1"><script nonce="<?= CSP_NONCE ?>" src="<?= BASE_URL ?>/js/i18n-dicionario.js?v=1.0.6" defer></script><script nonce="<?= CSP_NONCE ?>" src="<?= BASE_URL ?>/js/i18n.js?v=1.0.6" defer></script>
+</head>
 <body class="pagina-auth"><div class="container">
 <div class="left"><img src="<?= BASE_URL ?>/img/logo.png" class="logo" alt="Olho Cidadão"><p>Confirme seu e-mail para proteger seu cadastro.</p></div>
 <div class="right"><form method="post" action="<?= BASE_URL ?>/?rota=reenviar-verificacao">
